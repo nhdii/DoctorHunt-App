@@ -1,17 +1,18 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 
-export default function OnBoardingScreen01() {
+export default function OnBoardingScreen02() {
     const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
 
         {/* image container */}
         <View style={styles.imageContainer}>
             <View style={styles.ellipse154}>
-                <Image source={require('../assets/images/ellipse154.png')} style={styles.image} />
+                <Image source={require('../assets/images/Ellipse154_2.png')} style={styles.image} />
             </View>
             <LinearGradient colors={['#0EBE7E', '#07D9AD']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.ellipse153} />
         </View>
@@ -20,7 +21,7 @@ export default function OnBoardingScreen01() {
         <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>
-                    Find Trusted Doctors
+                    Choose Best Doctors
                 </Text>
             </View>
 
@@ -34,7 +35,7 @@ export default function OnBoardingScreen01() {
 
         {/* Group container */}
         <View style={styles.groupContainer}>
-            <TouchableOpacity onPress={()=> navigation.navigate('OnBoarding02')} style={styles.styleButton}>
+            <TouchableOpacity onPress={()=> navigation.navigate('OnBoarding03')} style={styles.styleButton}>
                 <Text style={styles.textButton}>
                     Get Started
                 </Text>
@@ -92,16 +93,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 342,
         height: 342,
-        top: -54,
-        left: -64,
-        borderRadius: 171, // Half of width or height to make it a perfect circle
-        overflow: 'hidden',
-        // backgroundColor: 'black',
+        top: -20,
+        left: 175,
+        borderRadius: 171, //chia đôi width để tạo hình tròn
         zIndex: -1,
     },
 
+    textContainer:{
+        width: 304,
+        height: 115,
+    },
+
     title:{
-        width: 295,
         height: 33,
         textAlign: 'center',
         fontFamily: 'Rubik', 
@@ -113,8 +116,8 @@ const styles = StyleSheet.create({
     },
 
     content:{
+        // width: 289,
         top: 10,
-        width: 289,
         textAlign: 'center',
         fontFamily: 'Rubik', 
         fontSize: 14, 

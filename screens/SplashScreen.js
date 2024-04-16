@@ -1,28 +1,41 @@
 // SplashScreen.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const SplashScreen = () => {
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('OnBoarding01'); 
+    }, 3000); // Thời gian chờ 3s
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.bg}>
-        <LinearGradient 
-          colors={['#FFFFFF00', '#61CEFFB8' ]}
-          start={{ x: 1, y: 1 }}
-          end={{ x: 0.5, y: 0.5 }}
-          style={styles.elipse142}
-        >
-        </LinearGradient>
+        <View style={styles.elipse142Container}>
+          <LinearGradient 
+            colors={['#61CEFF', '#FFFFFF' ]}
 
-        <LinearGradient 
-          colors={[ '#0EBE7E4D', '#FFFFFF00' ]}
-          start={{ x: 0.5, y: 0.5 }}
-          end={{ x: 1, y: 1}}
-          style={styles.elipse143}
-        >
-        </LinearGradient>
+            style={styles.elipse142}
+          />
+        </View>
+
+        <View style={styles.elipse143Container}>
+          <LinearGradient 
+            colors={['#0EBE7E4D', '#FFFFFF00' ]}
+            start={{ x: 1, y: 0.5 }}
+            end={{ x: 1, y: 1}}
+            style={styles.elipse143}
+          />
+        </View>
         
         {/* <View style={styles.elipse143} /> */}
       </View>
@@ -78,22 +91,36 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
 
+  elipse142Container:{
+    width: 216,
+    height: 216,
+    top: -33,
+    left: -100,
+  },
+
   elipse142: {
     width: 216,
     height: 216,
     position: 'absolute',
-    top: -33,
-    left: -100,
+    // top: -33,
+    // left: -100,
     borderRadius: 108,   
   },
 
-  elipse143: {
+  elipse143Container: {
     width: 216,
     height: 216,
     position: 'absolute',
     top: 649,
     left: 202,
-    borderRadius: 108
+  },
+
+  elipse143: {
+    width: 216,
+    height: 216,
+    // top: 649,
+    // left: 202,
+    borderRadius: 108,
   },
 });
 
