@@ -2,8 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import GradientCircle from '../components/gradientCircle';
 
 const SplashScreen = () => {
 
@@ -21,26 +21,14 @@ const SplashScreen = () => {
     <View style={styles.container}>
       <View style={styles.bg}>
         <View style={styles.elipse142Container}>
-          <LinearGradient 
-            colors={['#61CEFF', '#FFFFFF' ]}
-
-            style={styles.elipse142}
-          />
-        </View>
-
-        <View style={styles.elipse143Container}>
-          <LinearGradient 
-            colors={['#0EBE7E4D', '#FFFFFF00' ]}
-            start={{ x: 1, y: 0.5 }}
-            end={{ x: 1, y: 1}}
-            style={styles.elipse143}
-          />
+          <GradientCircle size={216} colors={['rgba(97, 206, 255, 0.72)', 'rgba(255, 255, 255, 1),']} centerColor="rgba(97, 206, 255, 0.72)"/>
         </View>
         
-        {/* <View style={styles.elipse143} /> */}
+        <View style={styles.elipse143Container}>
+          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+        </View>
       </View>
 
-        {/* View chứa logo */}
       <View style={styles.logoContainer}>
         <View style={styles.logoFrame}>
             <Image source={require('../assets/images/logo.png')} />
@@ -53,8 +41,8 @@ const SplashScreen = () => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
+    height: 812,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -64,11 +52,12 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
   },
+
   logoFrame: {
     width: 70,
     height: 70,
-    // backgroundColor: 'linear-gradient(101.01deg, #0EBE7E 0.84%, #07D9AD 95.65%)',
   },
+
   logoText: {
     fontFamily: 'Rubik',
     color: '#222222',
@@ -98,20 +87,20 @@ const styles = StyleSheet.create({
     left: -100,
   },
 
-  elipse142: {
-    width: 216,
-    height: 216,
-    position: 'absolute',
-    // top: -33,
-    // left: -100,
-    borderRadius: 108,   
-  },
+  // elipse142: {
+  //   width: 216,
+  //   height: 216,
+  //   position: 'absolute',
+  //   // top: -33,
+  //   // left: -100,
+  //   borderRadius: 108,   
+  // },
 
   elipse143Container: {
     width: 216,
     height: 216,
     position: 'absolute',
-    top: 649,
+    bottom: -53,
     left: 202,
   },
 

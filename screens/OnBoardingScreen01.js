@@ -2,9 +2,16 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
+import GradientCircle from '../components/gradientCircle';
+import TextComponent from '../components/textComponent';
 
 export default function OnBoardingScreen01() {
     const navigation = useNavigation();
+
+    const handleSkip = ()=>{
+        navigation.navigate('Home');
+    }
+
   return (
     <View style={styles.container}>
 
@@ -13,15 +20,17 @@ export default function OnBoardingScreen01() {
             <View style={styles.ellipse154}>
                 <Image source={require('../assets/images/ellipse154.png')} style={styles.image} />
             </View>
-            <LinearGradient colors={['#0EBE7E', '#07D9AD']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.ellipse153} />
+            <LinearGradient colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.ellipse153} />
         </View>
 
         {/* Text container */}
         <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>
+                {/* <Text style={styles.title}>
                     Find Trusted Doctors
-                </Text>
+                </Text> */}
+
+                <TextComponent style={styles.title}>Find Trusted Doctors</TextComponent>
             </View>
 
             <View style={styles.contentContainer}>
@@ -40,19 +49,16 @@ export default function OnBoardingScreen01() {
                 </Text>
             </TouchableOpacity>
 
-            <View>
+            <TouchableOpacity onPress={handleSkip}>
                 <Text style={styles.text}>
                     Skip
                 </Text>
-            </View>
+            </TouchableOpacity>
         </View>
 
-        <LinearGradient 
-            colors={[ '#0EBE7E4D', '#FFFFFF' ]}
-            start={{ x: 0.9, y: 0.4 }}
-            end={{ x: 1, y: 0}}
-            style={styles.ellipse143}
-        />
+        <View style={styles.elipse143Container}>
+          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+        </View>    
     </View>
   )
 }
@@ -104,11 +110,11 @@ const styles = StyleSheet.create({
         width: 295,
         height: 33,
         textAlign: 'center',
-        fontFamily: 'Rubik', 
+        // fontFamily: 'Rubik', 
         fontSize: 28, 
         fontWeight: '500', 
         lineHeight: 33.18, 
-        letterSpacing: -0.3,
+        // letterSpacing: -0.3,
         color: '#333333'
     },
 
@@ -156,6 +162,17 @@ const styles = StyleSheet.create({
         lineHeight: 23.18,
         letterSpacing: -0.3,
         color: '#677294'
+    },
+
+    elipse143Container: {
+        width: 216,
+        height: 216,
+        borderRadius: 108,
+        position: 'absolute',
+        bottom: -45,
+        left: 212,
+        zIndex: -1,
+        backgroundColor: 'rgba(14, 190, 126, 0.3)'
     },
 
     ellipse143: {
