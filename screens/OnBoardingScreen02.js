@@ -2,9 +2,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
+import GradientCircle from '../components/gradientCircle';
 
 export default function OnBoardingScreen02() {
     const navigation = useNavigation();
+
+    const handleSkip = ()=>{
+        navigation.navigate('Home');
+    }
 
   return (
     <View style={styles.container}>
@@ -41,19 +46,16 @@ export default function OnBoardingScreen02() {
                 </Text>
             </TouchableOpacity>
 
-            <View>
+            <TouchableOpacity onPress={handleSkip}>
                 <Text style={styles.text}>
                     Skip
                 </Text>
-            </View>
+            </TouchableOpacity>
         </View>
 
-        <LinearGradient 
-            colors={[ '#0EBE7E4D', '#FFFFFF' ]}
-            start={{ x: 0.9, y: 0.4 }}
-            end={{ x: 1, y: 0}}
-            style={styles.ellipse143}
-        />
+        <View style={styles.elipse143Container}>
+          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+        </View> 
     </View>
   )
 }
@@ -159,6 +161,17 @@ const styles = StyleSheet.create({
         lineHeight: 23.18,
         letterSpacing: -0.3,
         color: '#677294'
+    },
+
+    elipse143Container: {
+        width: 216,
+        height: 216,
+        borderRadius: 108,
+        position: 'absolute',
+        bottom: -45,
+        left: 212,
+        zIndex: -1,
+        backgroundColor: 'rgba(14, 190, 126, 0.3)'
     },
 
     ellipse143: {

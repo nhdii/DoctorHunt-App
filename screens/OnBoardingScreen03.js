@@ -5,6 +5,10 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function OnBoardingScreen03() {
     const navigation = useNavigation();
+
+    const handleSkip = ()=>{
+        navigation.navigate('Home');
+    }
   return (
     <View style={styles.container}>
 
@@ -40,11 +44,11 @@ export default function OnBoardingScreen03() {
                 </Text>
             </TouchableOpacity>
 
-            <View>
+            <TouchableOpacity onPress={handleSkip}>
                 <Text style={styles.text}>
                     Skip
                 </Text>
-            </View>
+            </TouchableOpacity>
         </View>
 
         <LinearGradient 
@@ -162,6 +166,17 @@ const styles = StyleSheet.create({
         color: '#677294'
     },
 
+    elipse143Container: {
+        width: 216,
+        height: 216,
+        borderRadius: 108,
+        position: 'absolute',
+        bottom: -45,
+        left: 212,
+        zIndex: -1,
+        backgroundColor: 'rgba(14, 190, 126, 0.3)'
+    },
+    
     ellipse143: {
         width: 216,
         height: 216,
