@@ -5,6 +5,10 @@ import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent'
 import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
+import FeatureDoctor from '../components/featureDoctor'
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function HomeScreen() {
 
@@ -15,10 +19,10 @@ export default function HomeScreen() {
 
     const doctorData = [
         {
-          image: require('../assets/images/doctor1.png'),
-          name: 'Dr. Fillerup Grab',
-          role: 'Medicine Specialist',
-          rating: 4, // Example rating
+            image: require('../assets/images/doctor1.png'),
+            name: 'Dr. Fillerup Grab',
+            role: 'Medicine Specialist',
+            rating: 4, // Example rating
         },
 
         {
@@ -26,9 +30,39 @@ export default function HomeScreen() {
             name: 'Dr. Blessing',
             role: 'Dentist Specialist',
             rating: 4, // Example rating
-          },
+        },
         // Add more doctor data here
-      ];
+    ];
+
+    const featureDoctor = [
+        {
+            image: require('../assets/images/feature1.png'),
+            name: 'Dr. Crick',
+            cost: '25.00/hours',
+            rating: 4, // Example rating
+        },
+
+        {
+            image: require('../assets/images/feature2.png'),
+            name: 'Dr. Strain',
+            cost: '22.00/hours',
+            rating: '3.7', // Example rating
+        },
+        
+        {
+            image: require('../assets/images/feature3.png'),
+            name: 'Dr. Lachinet',
+            cost: '29.00/hours',
+            rating: '3.0', // Example rating
+        },
+
+        {
+            image: require('../assets/images/feature1.png'),
+            name: 'Dr. Lachinet',
+            cost: '29.00/hours',
+            rating: '2.9', // Example rating
+        },
+    ];
 
   return (
     <ScrollView style={styles.container}>
@@ -67,11 +101,11 @@ export default function HomeScreen() {
                 </View>
             {/* Repeat for other doctors */}
             </ScrollView>
-      </View>
+        </View>
 
         {/* Doctor tab  */}
-      <View style={styles.doctorTab}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.doctorStyle}>
+        <View style={styles.doctorTab}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <TouchableOpacity>
                     <DoctorTab icon={dentistIcon} color="#2753F3" />
                 </TouchableOpacity>
@@ -89,23 +123,63 @@ export default function HomeScreen() {
                 </TouchableOpacity>
 
             </ScrollView>
-      </View>
+        </View>
 
-      {/* popular Doctor */}
-      <View style={styles.popularDoctor}>
-        {doctorData.map((doctor, index) => (
-            <View key={index}>
-            <PopularDoctor
-                title='Popular Doctor'
-                hideSeeAll={false}
-                image={doctor.image}
-                name={doctor.name}
-                role={doctor.role}
-                rating={doctor.rating}
-            />
+        {/* popular Doctor */}
+        <View style={styles.popularDoctor}>
+            <View style={styles.headline}>
+                <TextComponent style={styles.title}>Popular Doctor</TextComponent>
+
+                <TouchableOpacity>
+                    <Text style={{fontSize: 18, paddingRight: 22}}>See all </Text>
+                </TouchableOpacity>
             </View>
-        ))}
-      </View>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {doctorData.map((doctor, index) => (
+                    <TouchableOpacity 
+                        key={index}
+                        onPress={()=> {}}
+                    >
+                        <PopularDoctor
+                            image={doctor.image}
+                            name={doctor.name}
+                            role={doctor.role}
+                            rating={doctor.rating}
+                        />
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </View>
+
+        {/* feature Doctor */}
+        <View style={styles.featureDoctor}>
+            <View style={styles.headline}>
+                <TextComponent style={styles.title}>Feature Doctor</TextComponent>
+
+                <TouchableOpacity>
+                    <Text style={{fontSize: 14, paddingRight: 16, color: 'rgba(103, 114, 148, 1)'  }}>See all </Text>
+                </TouchableOpacity>
+            </View>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {featureDoctor.map((doctor, index) => (
+                    <TouchableOpacity 
+                        key={index}
+                        onPress={()=> {}}
+                    >
+                        <FeatureDoctor
+                            image={doctor.image}
+                            name={doctor.name}
+                            cost={doctor.cost}
+                            rating={doctor.rating}
+                        />
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </View>
+
+
 
     </ScrollView>
   )
@@ -200,11 +274,34 @@ const styles = StyleSheet.create({
         marginTop: 30,
         borderRadius: 8,
         paddingLeft: 20,
+        paddingRight: 20
     },
 
     popularDoctor:{
-        height: 307,
+        height: 337,
         paddingLeft: 19,
+        marginBottom: 31,
+    },
+
+    headline:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+    
+      title:{
+        fontSize: 18,
+        fontWeight: '500',
+        lineHeight: 21.33,
+        letterSpacing: -0.3,
+        color: 'rgba(51, 51, 51, 1)'    
+    },
+
+    featureDoctor:{
+        height: 195,
+        paddingHorizontal: 19,
+        marginBottom: 20,
+        borderRadius: 6,
+       
     },
 
 })
