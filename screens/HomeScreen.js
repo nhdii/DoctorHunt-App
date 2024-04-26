@@ -6,13 +6,8 @@ import TextComponent from '../components/textComponent'
 import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
-import { useNavigation } from '@react-navigation/native'
-import SearchBar from '../components/searchBar';
 
 export default function HomeScreen() {
-
-    const navigation = useNavigation();
-    const [searchText, setSearchText] = useState('');
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
@@ -66,16 +61,6 @@ export default function HomeScreen() {
         },
     ];
 
-    const handleSearch = (text) => {
-        // Xử lý tìm kiếm ở đây
-        setSearchText(text);
-
-    };
-
-    const handleLiveVideoPress = () => {
-        navigation.navigate('LiveStream');
-    };
-
   return (
     <SafeAreaView style={{flex: 1}}>
 
@@ -113,11 +98,13 @@ export default function HomeScreen() {
             <View style={styles.section}>
                 <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {/* Render list of live doctors here */}
+                {/* Example */}
 
-                    <TouchableOpacity onPress={handleLiveVideoPress} style={styles.doctorCard}>
-                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                    </TouchableOpacity>
+                <View style={styles.doctorCard}>
+                    <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
+                </View>
 
                     <View style={styles.doctorCard}>
                         <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
