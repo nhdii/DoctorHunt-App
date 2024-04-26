@@ -9,7 +9,7 @@ export default function OnBoardingScreen01() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('Home');
+        navigation.navigate('BottomNav');
     }
 
   return (
