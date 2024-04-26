@@ -6,11 +6,11 @@ import TextComponent from '../components/textComponent'
 import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 export default function HomeScreen() {
+
+    const navigation = useNavigation();
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
@@ -64,6 +64,10 @@ export default function HomeScreen() {
         },
     ];
 
+    const handleLiveVideoPress = () => {
+        navigation.navigate('LiveStream');
+    };
+
   return (
     <ScrollView style={styles.container}>
         <View style={styles.headerContainer}>
@@ -81,12 +85,10 @@ export default function HomeScreen() {
             <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {/* Render list of live doctors here */}
-                {/* Example */}
 
-                <View style={styles.doctorCard}>
+                <TouchableOpacity onPress={handleLiveVideoPress} style={styles.doctorCard}>
                     <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                </View>
+                </TouchableOpacity>
 
                 <View style={styles.doctorCard}>
                     <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
@@ -178,7 +180,6 @@ export default function HomeScreen() {
                 ))}
             </ScrollView>
         </View>
-
 
 
     </ScrollView>
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
     featureDoctor:{
         height: 195,
         paddingHorizontal: 19,
-        marginBottom: 20,
+        marginBottom: 94,
         borderRadius: 6,
        
     },

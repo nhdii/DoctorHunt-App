@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
@@ -8,11 +8,11 @@ export default function OnBoardingScreen02() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('Home');
+        navigation.navigate('BottomNav');
     }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
 
         {/* image container */}
         <View style={styles.imageContainer}>
@@ -56,12 +56,13 @@ export default function OnBoardingScreen02() {
         <View style={styles.elipse143Container}>
           <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
         </View> 
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 30,
         flexDirection: 'column',
         backgroundColor: "#ffffff",
         justifyContent: 'center',
@@ -76,7 +77,6 @@ const styles = StyleSheet.create({
     },
 
     ellipse154: {
-        // position: 'absolute',
         width: 336,
         height: 336,
         borderRadius: 168, 
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 342,
         height: 342,
-        top: -20,
-        left: 175,
+        top: -55,
+        left: 215,
         borderRadius: 171, //chia đôi width để tạo hình tròn
         zIndex: -1,
     },

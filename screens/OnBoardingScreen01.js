@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
@@ -9,11 +9,17 @@ export default function OnBoardingScreen01() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('Home');
+        navigation.navigate('BottomNav');
     }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
+        <StatusBar
+            animated={true}
+            backgroundColor='transparent'
+            translucent={true}
+        />
 
         {/* image container */}
         <View style={styles.imageContainer}>
@@ -59,12 +65,13 @@ export default function OnBoardingScreen01() {
         <View style={styles.elipse143Container}>
           <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
         </View>    
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 32,
         flexDirection: 'column',
         backgroundColor: "#ffffff",
         justifyContent: 'center',

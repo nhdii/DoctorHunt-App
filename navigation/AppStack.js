@@ -5,8 +5,11 @@ import OnBoardingScreen01 from '../screens/OnBoardingScreen01';
 import OnBoardingScreen02 from '../screens/OnBoardingScreen02';
 import OnBoardingScreen03 from '../screens/OnBoardingScreen03';
 import HomeScreen from '../screens/HomeScreen';
+import BottomNavigation from './bottomNavigation';
+import LiveStreamScreen from '../screens/LiveStreamScreen';
 
 const Stack = createNativeStackNavigator();
+
 
 const AppStack = () => {
   return (
@@ -15,7 +18,9 @@ const AppStack = () => {
       <Stack.Screen name="OnBoarding01" component={OnBoardingScreen01}/>
       <Stack.Screen name="OnBoarding02" component={OnBoardingScreen02}/>
       <Stack.Screen name="OnBoarding03" component={OnBoardingScreen03}/>
-      <Stack.Screen name="Home" component={HomeScreen}/>
+      <Stack.Screen name="LiveStream" component={LiveStreamScreen}/>
+      {/* <Stack.Screen name="Home" component={HomeScreen}/> */}
+      <Stack.Screen name="BottomNav" component={BottomNavigation}/>
     </Stack.Navigator>
   );
 };

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
@@ -7,62 +7,64 @@ export default function OnBoardingScreen03() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('Home');
+        navigation.navigate('BottomNav');
     }
-  return (
-    <View style={styles.container}>
 
-        {/* image container */}
-        <View style={styles.imageContainer}>
-            <View style={styles.ellipse154}>
-                <Image source={require('../assets/images/Ellipse154_3.png')} style={styles.image} />
-            </View>
-            <LinearGradient colors={['#0EBE7E', '#07D9AD']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.ellipse153} />
-        </View>
+    return (
+        <SafeAreaView style={styles.container}>
 
-        {/* Text container */}
-        <View style={styles.textContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>
-                    Easy Appointments
-                </Text>
+            {/* image container */}
+            <View style={styles.imageContainer}>
+                <View style={styles.ellipse154}>
+                    <Image source={require('../assets/images/Ellipse154_3.png')} style={styles.image} />
+                </View>
+                <LinearGradient colors={['#0EBE7E', '#07D9AD']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.ellipse153} />
             </View>
 
-            <View style={styles.contentContainer}>
-                <Text style={styles.content}>
-                    Contrary to popular belief, Lorem Ipsum is not simply random text. 
-                    It has roots in a piece of it over 2000 years old.
-                </Text>
+            {/* Text container */}
+            <View style={styles.textContainer}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        Easy Appointments
+                    </Text>
+                </View>
+
+                <View style={styles.contentContainer}>
+                    <Text style={styles.content}>
+                        Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                        It has roots in a piece of it over 2000 years old.
+                    </Text>
+                </View>
             </View>
-        </View>
 
-        {/* Group container */}
-        <View style={styles.groupContainer}>
-            <TouchableOpacity onPress={()=> navigation.navigate('OnBoarding03')} style={styles.styleButton}>
-                <Text style={styles.textButton}>
-                    Get Started
-                </Text>
-            </TouchableOpacity>
+            {/* Group container */}
+            <View style={styles.groupContainer}>
+                <TouchableOpacity onPress={()=> navigation.navigate('BottomNav')} style={styles.styleButton}>
+                    <Text style={styles.textButton}>
+                        Get Started
+                    </Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSkip}>
-                <Text style={styles.text}>
-                    Skip
-                </Text>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity onPress={handleSkip}>
+                    <Text style={styles.text}>
+                        Skip
+                    </Text>
+                </TouchableOpacity>
+            </View>
 
-        <LinearGradient 
-            colors={[ '#0EBE7E4D', '#FFFFFF' ]}
-            start={{ x: 0.9, y: 0.4 }}
-            end={{ x: 1, y: 0}}
-            style={styles.ellipse143}
-        />
-    </View>
-  )
+            <LinearGradient 
+                colors={[ '#0EBE7E4D', '#FFFFFF' ]}
+                start={{ x: 0.9, y: 0.4 }}
+                end={{ x: 1, y: 0}}
+                style={styles.ellipse143}
+            />
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 38,
         flexDirection: 'column',
         backgroundColor: "#ffffff",
         justifyContent: 'center',
