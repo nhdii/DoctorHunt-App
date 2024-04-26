@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native'
+import React, { useState } from 'react'
 import GradientCircle from '../components/gradientCircle'
 import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent'
@@ -7,10 +7,12 @@ import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
 import { useNavigation } from '@react-navigation/native'
+import SearchBar from '../components/searchBar';
 
 export default function HomeScreen() {
 
     const navigation = useNavigation();
+    const [searchText, setSearchText] = useState('');
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
@@ -64,138 +66,160 @@ export default function HomeScreen() {
         },
     ];
 
+    const handleSearch = (text) => {
+        // Xử lý tìm kiếm ở đây
+        setSearchText(text);
+
+    };
+
     const handleLiveVideoPress = () => {
         navigation.navigate('LiveStream');
     };
 
   return (
-    <ScrollView style={styles.container}>
-        <View style={styles.headerContainer}>
-            <LinearGradient colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.rectangle} />
-            <View style={styles.groupContainer}>
-                <View style={styles.text}>
-                    <Text style={styles.greetingText}>Hi Handwerker!</Text>
-                    <Text style={styles.titleText}>Find Your Doctor</Text>
+    <SafeAreaView style={{flex: 1}}>
+
+        <LinearGradient 
+            colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} 
+            start={{x: 0, y: 0}} 
+            end={{x: 1, y: 1}}
+        >
+            <StatusBar
+                animated={true}
+                backgroundColor='transparent'
+                translucent={true}
+            />
+        </LinearGradient>
+
+        <ScrollView>
+            <View style={styles.headerContainer}>
+                <LinearGradient colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.rectangle} />
+                <View style={styles.groupContainer}>
+                    <View style={styles.text}>
+                        <Text style={styles.greetingText}>Hi Handwerker!</Text>
+                        <Text style={styles.titleText}>Find Your Doctor</Text>
+                    </View>
+                    <Image source={require('../assets/images/Ellipse26.png')} style={styles.image} />
                 </View>
-                <Image source={require('../assets/images/Ellipse26.png')} style={styles.image} />
-            </View>
-        </View>
-        
-        <View style={styles.section}>
-            <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
-
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-
-                <TouchableOpacity onPress={handleLiveVideoPress} style={styles.doctorCard}>
-                    <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                </TouchableOpacity>
-
-                <View style={styles.doctorCard}>
-                    <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                </View>
-
-                <View style={styles.doctorCard}>
-                    <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                </View>
-
-                <View style={styles.doctorCard}>
-                    <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                </View>
-            {/* Repeat for other doctors */}
-            </ScrollView>
-        </View>
-
-        {/* Doctor tab  */}
-        <View style={styles.doctorTab}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity>
-                    <DoctorTab icon={dentistIcon} color="#2753F3" />
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <DoctorTab icon={heartIcon} color="#0EBE7E" />
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <DoctorTab icon={eyeIcon} color="#FE7F44" />
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <DoctorTab icon={bodyIcon} color="#FF484C" />
-                </TouchableOpacity>
-
-            </ScrollView>
-        </View>
-
-        {/* popular Doctor */}
-        <View style={styles.popularDoctor}>
-            <View style={styles.headline}>
-                <TextComponent style={styles.title}>Popular Doctor</TextComponent>
-
-                <TouchableOpacity>
-                    <Text style={{fontSize: 18, paddingRight: 22}}>See all </Text>
-                </TouchableOpacity>
             </View>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {doctorData.map((doctor, index) => (
-                    <TouchableOpacity 
-                        key={index}
-                        onPress={()=> {}}
-                    >
-                        <PopularDoctor
-                            image={doctor.image}
-                            name={doctor.name}
-                            role={doctor.role}
-                            rating={doctor.rating}
-                        />
+            {/* search bar */}
+            <View style={styles.searchBar}>
+                <SearchBar
+                    onChangeText={handleSearch}
+                />
+            </View>
+            
+            <View style={styles.section}>
+                <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
+
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+                    <TouchableOpacity onPress={handleLiveVideoPress} style={styles.doctorCard}>
+                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
                     </TouchableOpacity>
-                ))}
-            </ScrollView>
-        </View>
 
-        {/* feature Doctor */}
-        <View style={styles.featureDoctor}>
-            <View style={styles.headline}>
-                <TextComponent style={styles.title}>Feature Doctor</TextComponent>
+                    <View style={styles.doctorCard}>
+                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
+                    </View>
 
-                <TouchableOpacity>
-                    <Text style={{fontSize: 14, paddingRight: 16, color: 'rgba(103, 114, 148, 1)'  }}>See all </Text>
-                </TouchableOpacity>
+                    <View style={styles.doctorCard}>
+                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
+                    </View>
+
+                    <View style={styles.doctorCard}>
+                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
+                    </View>
+                {/* Repeat for other doctors */}
+                </ScrollView>
             </View>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {featureDoctor.map((doctor, index) => (
-                    <TouchableOpacity 
-                        key={index}
-                        onPress={()=> {}}
-                    >
-                        <FeatureDoctor
-                            image={doctor.image}
-                            name={doctor.name}
-                            cost={doctor.cost}
-                            rating={doctor.rating}
-                        />
+            {/* Doctor tab  */}
+            <View style={styles.doctorTab}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <TouchableOpacity>
+                        <DoctorTab icon={dentistIcon} color="#2753F3" />
                     </TouchableOpacity>
-                ))}
-            </ScrollView>
-        </View>
+
+                    <TouchableOpacity>
+                        <DoctorTab icon={heartIcon} color="#0EBE7E" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <DoctorTab icon={eyeIcon} color="#FE7F44" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <DoctorTab icon={bodyIcon} color="#FF484C" />
+                    </TouchableOpacity>
+
+                </ScrollView>
+            </View>
+
+            {/* popular Doctor */}
+            <View style={styles.popularDoctor}>
+                <View style={styles.headline}>
+                    <TextComponent style={styles.title}>Popular Doctor</TextComponent>
+
+                    <TouchableOpacity>
+                        <Text style={{fontSize: 18, paddingRight: 22}}>See all </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {doctorData.map((doctor, index) => (
+                        <TouchableOpacity 
+                            key={index}
+                            onPress={()=> {}}
+                        >
+                            <PopularDoctor
+                                image={doctor.image}
+                                name={doctor.name}
+                                role={doctor.role}
+                                rating={doctor.rating}
+                            />
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+            </View>
+
+            {/* feature Doctor */}
+            <View style={styles.featureDoctor}>
+                <View style={styles.headline}>
+                    <TextComponent style={styles.title}>Feature Doctor</TextComponent>
+
+                    <TouchableOpacity>
+                        <Text style={{fontSize: 14, paddingRight: 16, color: 'rgba(103, 114, 148, 1)'  }}>See all </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {featureDoctor.map((doctor, index) => (
+                        <TouchableOpacity 
+                            key={index}
+                            onPress={()=> {}}
+                        >
+                            <FeatureDoctor
+                                image={doctor.image}
+                                name={doctor.name}
+                                cost={doctor.cost}
+                                rating={doctor.rating}
+                            />
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+            </View>
 
 
-    </ScrollView>
+        </ScrollView>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: 375, 
-        height: 1174,
-    },
 
     headerContainer: {
-        width: 375,
-        height: 156,
+        position: 'absolute',
     },
 
     rectangle:{
@@ -206,12 +230,16 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 20,
     },
 
+    searchBar: {
+        marginTop: 126,
+    },
+
     groupContainer:{
         position: 'absolute',
         flexDirection: 'row',
         width: 336,
         height: 63,
-        top: 7,
+        top: 36,
         left: 12,
     },
 
