@@ -54,7 +54,7 @@ export default function OnBoardingScreen02() {
         </View>
 
         <View style={styles.elipse143Container}>
-          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} color="rgba(14, 190, 126, 0.3)" />
         </View> 
     </SafeAreaView>
   )

@@ -63,7 +63,7 @@ export default function OnBoardingScreen01() {
         </View>
 
         <View style={styles.elipse143Container}>
-          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} color="rgba(14, 190, 126, 0.3)" />
         </View>    
     </SafeAreaView>
   )
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         paddingTop: 32,
         flexDirection: 'column',
         backgroundColor: "#ffffff",
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
     },
 
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     },
 
     ellipse154: {
-        // position: 'absolute',
         width: 336,
         height: 336,
         borderRadius: 168, 
@@ -138,7 +137,6 @@ const styles = StyleSheet.create({
     },
 
     groupContainer:{
-        width: 295,
         height: 180,
         top: 48,
         alignItems: 'center',
@@ -180,16 +178,6 @@ const styles = StyleSheet.create({
         left: 212,
         zIndex: -1,
         backgroundColor: 'rgba(14, 190, 126, 0.3)'
-    },
-
-    ellipse143: {
-        width: 216,
-        height: 216,
-        position: 'absolute',
-        top: 576,
-        left: 194,
-        borderRadius: 108,
-        zIndex: -1
     },
 
 
