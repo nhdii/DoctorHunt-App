@@ -21,11 +21,11 @@ const SplashScreen = () => {
     <View style={styles.container}>
       <View style={styles.bg}>
         <View style={styles.elipse142Container}>
-          <GradientCircle size={216} colors={['rgba(97, 206, 255, 0.72)', 'rgba(255, 255, 255, 1),']} centerColor="rgba(97, 206, 255, 0.72)"/>
+          <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
         </View>
         
         <View style={styles.elipse143Container}>
-          <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} centerColor="rgba(14, 190, 126, 0.3)" />
+          <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
         </View>
       </View>
 
