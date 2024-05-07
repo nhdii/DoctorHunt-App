@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, StatusBar, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import GradientCircle from '../components/gradientCircle'
 import LinearGradient from 'react-native-linear-gradient'
@@ -7,6 +7,8 @@ import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
 import SearchBar from '../components/searchBar'
+
+var {width, height} = Dimensions.get('window')
 
 export default function HomeScreen() {
 
@@ -218,23 +220,25 @@ const styles = StyleSheet.create({
 
     rectangle:{
         position: 'absolute',
-        width: 360,
+        width: width,
         height: 156,
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,
     },
 
     searchBar: {
+        marginLeft: 20,
         marginTop: 126,
     },
 
     groupContainer:{
         position: 'absolute',
         flexDirection: 'row',
-        width: 336,
+        width: width,
         height: 63,
-        top: 36,
-        left: 12,
+        marginTop: 36,
+        paddingLeft: 19,
+        paddingRight: 20,
     },
 
     text: {
@@ -309,9 +313,9 @@ const styles = StyleSheet.create({
     headline:{
         flexDirection: 'row',
         justifyContent: 'space-between',
-      },
+    },
     
-      title:{
+    title:{
         fontSize: 18,
         fontWeight: '500',
         lineHeight: 21.33,
