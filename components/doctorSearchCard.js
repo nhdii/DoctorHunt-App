@@ -1,58 +1,89 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native'
+import React, { useState } from 'react'
 import TextComponent from './textComponent'
+import { HeartIcon as OutlineHeartIcon } from 'react-native-heroicons/outline'
+import { HeartIcon as SolidHeartIcon } from 'react-native-heroicons/solid'
+import { useNavigation } from '@react-navigation/native'
 
-export default function DoctorSearchCard() {
+var {width, height} = Dimensions.get('window')
+
+export default function DoctorSearchCard({doctorInfo, onPress}) {
+
+    const navigation = useNavigation();
+    const [isFavourite, toggleFavourite] = useState(false);
+    const [isSolid, setIsSolid] = useState(false);
+
+    const handleToggleIcon = () => {
+        toggleFavourite(!isFavourite);
+        setIsSolid(!isSolid);
+    };
+
+    const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
+
   return (
     <View style={styles.container}>
-        <View style={styles.leftColumn}>
-            <Image source={require('../assets/images/doctorSearch.png')} style={styles.image} />
-            <View style={styles.textContainer}>
-                <TextComponent style={styles.statusText}>
-                    Next Available
-                </TextComponent>
-
-                <TextComponent style={styles.timeText}>
-                    10:00 AM tomorrow
-                </TextComponent>
-            </View>
-        </View>
-
-        <View style={styles.rightColumn}>
-            <View style={styles.infoContainer}>
-                <TextComponent style={styles.nameStyle}>
-                    Dr. Shruti Kedia
-                </TextComponent>
-
-                <TextComponent style={styles.roleStyle}>
-                    Tooths Dentist
-                </TextComponent>
-
-                <TextComponent style={styles.expStyle}>
-                    7 Years experience 
-                </TextComponent>
-
-                <View style={styles.patientStyle}>
-                    <View style={styles.percent}>
-                        <View style={styles.ellipse} />
-                        <TextComponent style={styles.percentText}>
-                            87%
+        {
+            doctorInfo && (
+                <View style={styles.leftColumn}>
+                    <Image source={require('../assets/images/doctorSearch.png')} style={styles.image} />
+                    <View style={styles.textContainer}>
+                        <TextComponent style={styles.statusText}>
+                            {doctorInfo.status}
                         </TextComponent>
-                    </View>
 
-                    <View style={styles.patient}>
-                        <View style={styles.ellipse} />
-                        <TextComponent style={styles.percentText}>
-                            69 Patient Stories
+                        <TextComponent style={styles.timeText}>
+                            {doctorInfo.availability}
                         </TextComponent>
                     </View>
                 </View>
-            </View>
+            )
+        }
 
-            <View >
+        {
+            doctorInfo && (
+                <View style={styles.rightColumn}>
+                    <View style={styles.infoContainer}>
+                        <TextComponent style={styles.nameStyle}>
+                            {doctorInfo.name}
+                        </TextComponent>
 
-            </View>
-        </View>
+                        <TextComponent style={styles.roleStyle}>
+                            {doctorInfo.role}
+                        </TextComponent>
+
+                        <TextComponent style={styles.expStyle}>
+                            {doctorInfo.experience}
+                        </TextComponent>
+
+                        <View style={styles.patientStyle}>
+                            <View style={styles.percent}>
+                                <View style={styles.ellipse} />
+                                <TextComponent style={styles.percentText}>
+                                    {doctorInfo.percent}
+                                </TextComponent>
+                            </View>
+
+                            <View style={styles.patient}>
+                                <View style={styles.ellipse} />
+                                <TextComponent style={styles.percentText}>
+                                    {doctorInfo.patient}
+                                </TextComponent>
+                            </View>
+                        </View>
+
+                        <TouchableOpacity onPress={handleToggleIcon} >
+                            <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"}/>
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
+                        <TextComponent style={styles.textButton}>
+                            Book Now
+                        </TextComponent>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
 
     </View>
   )
@@ -60,9 +91,11 @@ export default function DoctorSearchCard() {
 
 const styles = StyleSheet.create({
     container:{
-        flexDirection: 'row',
         width: 335,
         height: 170,
+        flexDirection: 'row',
+        borderRadius: 8,
+        marginBottom: 10,
         backgroundColor: 'rgba(255, 255, 255, 1)',
     },
 
@@ -98,13 +131,16 @@ const styles = StyleSheet.create({
     },
 
     rightColumn:{
+        flex: 1,
         flexDirection: 'column',
-        // backgroundColor: 'gray'
+        marginRight: 17,
+        borderRadius: 8
     },
 
     infoContainer:{
         width: 192,
         height: 80,
+        marginTop: 22,
         marginLeft: 2
     },
 
@@ -168,5 +204,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
+    buttonContainer:{
+        width: 112,
+        height: 34,
+        borderRadius: 4,
+        marginTop: 17,
+        marginLeft: 87,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "rgba(14, 190, 127, 1)"
+    },
+
+    favoriteIcon:{
+        marginLeft: 175,
+        position: 'absolute',
+
+    },
+
+    icon: {
+        width: 19, 
+        height: 17
+    }
 
 })

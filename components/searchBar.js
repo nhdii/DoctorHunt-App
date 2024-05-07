@@ -37,9 +37,8 @@ const SearchBar = ({ onChangeText }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection:'row',
-    width: 315,
+    width: 335,
     height: 54,
-    left: 20,
     borderRadius: 6,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     justifyContent: 'center',
