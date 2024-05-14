@@ -97,6 +97,16 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
+                <View style={styles.bg}>
+                    <View style={styles.elipse142Container}>
+                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
+                    </View>
+                    
+                    <View style={styles.elipse143Container}>
+                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
+                    </View>
+                </View>
+
                 {/* search bar */}
                 <View style={styles.searchBar}>
                     <SearchBar
@@ -224,6 +234,34 @@ const styles = StyleSheet.create({
         height: 156,
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,
+    },
+
+    bg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    
+    elipse142Container:{
+        position: 'absolute',
+        width: 216,
+        height: 216,
+        top: 148,
+        left: -102,
+        zIndex: -1
+    },
+
+    elipse143Container: {
+        width: 216,
+        height: 216,
+        position: 'absolute',
+        bottom: -53,
+        left: 202,
     },
 
     searchBar: {
