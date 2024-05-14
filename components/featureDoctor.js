@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start', 
         alignItems: 'center', 
         borderRadius: 6,
-        borderWidth: 1,
-        borderColor: 'rgba(119, 126, 165, 1)',
+        backgroundColor: 'rgba(255, 255, 255, 1)'
     },
 
     favoriteRatingGroup: {
