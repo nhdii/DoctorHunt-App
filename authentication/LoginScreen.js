@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, Animated, Modal, PanResponder } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, Animated, Modal, PanResponder, TouchableWithoutFeedback } from 'react-native';
 import ButtonComponent from '../components/buttonComponent';
 import TextComponent from '../components/textComponent';
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/solid';
@@ -10,6 +10,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle show/hide password
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalEmail, setModalEmail] = useState(''); // State for the email input in modal
   const translateY = useRef(new Animated.Value(500)).current;
 
   const handleLogin = () => {
@@ -24,7 +25,11 @@ const LoginScreen = () => {
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([null, { dy: translateY }], { useNativeDriver: false }),
+      onPanResponderMove: (e, gestureState) => {
+        if (gestureState.dy > 0) {
+          translateY.setValue(gestureState.dy);
+        }
+      },
       onPanResponderRelease: (_, gestureState) => {
         if (gestureState.dy > 100) {
           hideModal();
@@ -33,7 +38,7 @@ const LoginScreen = () => {
             toValue: 0,
             tension: 20,
             friction: 7,
-            useNativeDriver: false,
+            useNativeDriver: true,
           }).start();
         }
       },
@@ -57,7 +62,6 @@ const LoginScreen = () => {
     }).start(() => {
       setModalVisible(false);
     });
-    
   };
 
   return (
@@ -133,21 +137,49 @@ const LoginScreen = () => {
                 animationType="none"
                 transparent={true}
                 visible={modalVisible}
-                onRequestClose={() => {
-                    hideModal();
-                }}
+                onRequestClose={hideModal}
             >
-                <View style={styles.modalContainer}>
-                  <Animated.View
-                      style={[styles.modalView, { transform: [{ translateY }] }]}
-                      {...panResponder.panHandlers}
-                  >
-                      {/* Nội dung của modal */}
-                      <TouchableOpacity onPress={hideModal}>
-                          <Text style={{marginTop: 10 }}>Close Modal</Text>
-                      </TouchableOpacity>
-                  </Animated.View>
-                </View>
+                <TouchableWithoutFeedback onPress={hideModal}>
+                    <View style={styles.modalOverlay} />
+                </TouchableWithoutFeedback>
+                <Animated.View
+                    style={[styles.modalView, { transform: [{ translateY }] }]}
+                    {...panResponder.panHandlers}
+                >
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity onPress={hideModal}>
+                          <View style={styles.modalRectangle} />
+                        </TouchableOpacity>
+
+                        <View style={styles.descriptionContainer}>
+                          <Text style={styles.modalTitle}>Forgot Password</Text>
+
+                          <Text style={styles.modalDescription}>
+                            Enter your email for the verification process, we will send a 4-digit code to your email.
+                          </Text>
+                        </View>
+
+                        <TextInput
+                          style={styles.modalEmailInput}
+                          placeholder="Email"
+                          value={modalEmail}
+                          onChangeText={setModalEmail}
+                          keyboardType="email-address"
+                        />
+
+                        <View style={{marginBottom: 30}}>
+                          <ButtonComponent 
+                              title="Continue"
+                              onPress={() => console.log('Send code to:', modalEmail)}
+                              width={295}
+                              height={54}
+                              borderRadius={12}
+                              textSize={18}
+                          />
+                        </View>
+                        
+                    </View>
+                </Animated.View>
             </Modal>
 
         </View>
@@ -292,6 +324,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
   modalView: {
     width: "100%",
     height: 390,
@@ -300,7 +337,56 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
+
+  modalContent: {
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+
+  modalRectangle: {
+    width: 130,
+    height: 5,
+    backgroundColor: '#rgba(196, 196, 196, 1)',
+    borderRadius: 6,
+    marginBottom: 55,
+  },
+
+  descriptionContainer:{
+    width: 288,
+    marginBottom: 36,
+    marginLeft: -39
+  },
+
+  modalTitle: {
+    fontSize: 24,
+    lineHeight: 28.44, 
+    letterSpacing: -0.3,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: 'rgba(0, 0, 0, 1)',
+  },
+
+  modalDescription: {
+    fontSize: 14,
+    lineHeight: 21.18,
+    fontWeight: '400',
+    color: 'rgba(103, 114, 148, 1)',
+  },
+
+  modalEmailInput: {
+    width: 335,
+    height: 54,
+    borderColor: 'rgba(103, 114, 148, 0.16)',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 25,
+    marginBottom: 30,
+  }
 });
 
 export default LoginScreen;
