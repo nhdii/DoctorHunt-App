@@ -1,7 +1,7 @@
 // SplashScreen.js
 
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, SafeAreaView, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import GradientCircle from '../components/gradientCircle';
 
@@ -18,7 +18,14 @@ const SplashScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+
+      <StatusBar
+          animated={true}
+          backgroundColor='transparent'
+          translucent={true}
+      />
+      
       <View style={styles.bg}>
         <View style={styles.elipse142Container}>
           <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
@@ -36,13 +43,12 @@ const SplashScreen = () => {
         <Text style={styles.logoText}>Doctor Hunt</Text>
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 812,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -87,15 +93,6 @@ const styles = StyleSheet.create({
     left: -100,
   },
 
-  // elipse142: {
-  //   width: 216,
-  //   height: 216,
-  //   position: 'absolute',
-  //   // top: -33,
-  //   // left: -100,
-  //   borderRadius: 108,   
-  // },
-
   elipse143Container: {
     width: 216,
     height: 216,
@@ -104,13 +101,6 @@ const styles = StyleSheet.create({
     left: 202,
   },
 
-  elipse143: {
-    width: 216,
-    height: 216,
-    // top: 649,
-    // left: 202,
-    borderRadius: 108,
-  },
 });
 
 export default SplashScreen;
