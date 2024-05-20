@@ -7,10 +7,13 @@ import DoctorTab from '../components/doctorTab'
 import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
 import SearchBar from '../components/searchBar'
+import { DrawerActions, useNavigation } from '@react-navigation/native'
 
 var {width, height} = Dimensions.get('window')
 
 export default function HomeScreen() {
+
+    const navigation = useNavigation();
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
@@ -93,17 +96,20 @@ export default function HomeScreen() {
                             <Text style={styles.greetingText}>Hi Handwerker!</Text>
                             <Text style={styles.titleText}>Find Your Doctor</Text>
                         </View>
-                        <Image source={require('../assets/images/Ellipse26.png')} style={styles.image} />
+                        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={styles.image}>
+                            <Image source={require('../assets/images/Ellipse26.png')}/>
+
+                        </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={styles.bg}>
                     <View style={styles.elipse142Container}>
-                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
+                        <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
                     </View>
                     
                     <View style={styles.elipse143Container}>
-                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
+                        <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
                     </View>
                 </View>
 
@@ -117,13 +123,12 @@ export default function HomeScreen() {
                 <View style={styles.section}>
                     <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {/* Render list of live doctors here */}
-                    {/* Example */}
-
-                    <View style={styles.doctorCard}>
-                        <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
-                    </View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        {/* Render list of live doctors here */}
+                        {/* Example */}
+                        <TouchableOpacity onPress={()=>{navigation.navigate('LiveStream')}} style={styles.doctorCard}>
+                            <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
+                        </TouchableOpacity>
 
                         <View style={styles.doctorCard}>
                             <Image source={require('../assets/images/doctor_lives_1.png')} style={styles.doctorAvatar} />
@@ -316,9 +321,9 @@ const styles = StyleSheet.create({
 
     sectionTitle: {
         fontSize: 18,
-        fontWeight: '500',
+        fontWeight: 'bold',
         lineHeight: 21.33,
-        paddingTop: 54,
+        paddingTop: 30,
         color: 'rgba(51, 51, 51, 1)'
     },
 

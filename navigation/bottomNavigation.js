@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import HomeScreen from '../screens/HomeScreen';
+import FavouriteScreen from '../screens/FavouriteScreen';
 
 const Tab = createBottomTabNavigator();
 const screenOptions ={
@@ -55,8 +56,8 @@ const BottomNavigation = () => {
             }} 
         />
         <Tab.Screen 
-            name="Home1" 
-            component={HomeScreen} 
+            name="Favourite" 
+            component={FavouriteScreen} 
             options={{
                 tabBarIcon: ({ focused }) => (
                     <CustomTabBarIcon
