@@ -7,7 +7,7 @@ export default function OnBoardingScreen03() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('BottomNav');
+        navigation.navigate('Login');
     }
 
     return (
@@ -39,7 +39,7 @@ export default function OnBoardingScreen03() {
 
             {/* Group container */}
             <View style={styles.groupContainer}>
-                <TouchableOpacity onPress={()=> navigation.navigate('BottomNav')} style={styles.styleButton}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Login')} style={styles.styleButton}>
                     <Text style={styles.textButton}>
                         Get Started
                     </Text>

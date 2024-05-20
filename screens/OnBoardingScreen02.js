@@ -8,7 +8,7 @@ export default function OnBoardingScreen02() {
     const navigation = useNavigation();
 
     const handleSkip = ()=>{
-        navigation.navigate('BottomNav');
+        navigation.navigate('Login');
     }
 
   return (

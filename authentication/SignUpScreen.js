@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
 import ButtonComponent from '../components/buttonComponent';
 import TextComponent from '../components/textComponent';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUpScreen = () => {
+
+  const navigation = useNavigation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -78,7 +81,7 @@ const SignUpScreen = () => {
               <TextComponent style={styles.question}>
                 Have an account?
               </TextComponent>
-              <TouchableOpacity onPress={{}}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('Login')}}>
                   <TextComponent style={styles.login}> Login</TextComponent>
                 </TouchableOpacity>
             </View>
