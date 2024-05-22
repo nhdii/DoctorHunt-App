@@ -12,6 +12,7 @@ import MedicineOrdersScreen from '../screens/MedicineOrdersScreen';
 import HelpCenterScreen from '../screens/HelpCenterScreen';
 import TestBookingsScreen from '../screens/TestBookingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
+import SettingScreen from '../screens/SettingScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -42,7 +43,7 @@ const DrawerContent = (props) => {
                     { name: 'Test Bookings', icon: require('../assets/images/testBookingsIcon.png'), screen: 'TestBookings' },
                     { name: 'Privacy & Policy', icon: require('../assets/images/privacyPolicyIcon.png'), screen: 'PrivacyPolicy' },
                     { name: 'Help Center', icon: require('../assets/images/helpCenterIcon.png'), screen: 'HelpCenter' },
-                    { name: 'Setting', icon: require('../assets/images/settingIcon.png') },
+                    { name: 'Setting', icon: require('../assets/images/settingIcon.png'), screen: 'Setting' },
                 ].map((item, index) => (
                     <TouchableOpacity onPress={()=>{ navigation.navigate(item.screen)}} key={index} style={styles.menuItem}>
                         <Image source={item.icon} style={styles.menuIcon} />
@@ -74,6 +75,7 @@ const DrawerNavigation = () => {
                 <Drawer.Screen name="HelpCenter" component={HelpCenterScreen}/>
                 <Drawer.Screen name="TestBookings" component={TestBookingsScreen} />
                 <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen}/>
+                <Drawer.Screen name="Setting" component={SettingScreen}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
