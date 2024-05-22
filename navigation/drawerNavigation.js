@@ -10,6 +10,7 @@ import MyDoctorScreen from '../screens/MyDoctorScreen';
 import MedicalRecordsScreen from '../screens/MedicalRecordsScreen';
 import MedicineOrdersScreen from '../screens/MedicineOrdersScreen';
 import HelpCenterScreen from '../screens/HelpCenterScreen';
+import TestBookingsScreen from '../screens/TestBookingsScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -37,7 +38,7 @@ const DrawerContent = (props) => {
                     { name: 'Medical Records', icon: require('../assets/images/medicalRecordsIcon.png'), screen: 'MedicalRecords' },
                     { name: 'Payments', icon: require('../assets/images/paymentsIcon.png')},
                     { name: 'Medicine Orders', icon: require('../assets/images/medicineOrdersIcon.png'), screen: 'MedicineOrders' },
-                    { name: 'Test Bookings', icon: require('../assets/images/testBookingsIcon.png') },
+                    { name: 'Test Bookings', icon: require('../assets/images/testBookingsIcon.png'), screen: 'TestBookings' },
                     { name: 'Privacy & Policy', icon: require('../assets/images/privacyPolicyIcon.png') },
                     { name: 'Help Center', icon: require('../assets/images/helpCenterIcon.png'), screen: 'HelpCenter' },
                     { name: 'Setting', icon: require('../assets/images/settingIcon.png') },
@@ -70,6 +71,7 @@ const DrawerNavigation = () => {
                 <Drawer.Screen name="MedicalRecords" component={MedicalRecordsScreen} /> 
                 <Drawer.Screen name="MedicineOrders" component={MedicineOrdersScreen} /> 
                 <Drawer.Screen name="HelpCenter" component={HelpCenterScreen}/>
+                <Drawer.Screen name="TestBookings" component={TestBookingsScreen} />
             </Drawer.Navigator>
         </NavigationContainer>
     );
