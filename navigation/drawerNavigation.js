@@ -9,6 +9,7 @@ import { ArrowLeftStartOnRectangleIcon } from 'react-native-heroicons/outline';
 import MyDoctorScreen from '../screens/MyDoctorScreen';
 import MedicalRecordsScreen from '../screens/MedicalRecordsScreen';
 import MedicineOrdersScreen from '../screens/MedicineOrdersScreen';
+import HelpCenterScreen from '../screens/HelpCenterScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -38,7 +39,7 @@ const DrawerContent = (props) => {
                     { name: 'Medicine Orders', icon: require('../assets/images/medicineOrdersIcon.png'), screen: 'MedicineOrders' },
                     { name: 'Test Bookings', icon: require('../assets/images/testBookingsIcon.png') },
                     { name: 'Privacy & Policy', icon: require('../assets/images/privacyPolicyIcon.png') },
-                    { name: 'Help Center', icon: require('../assets/images/helpCenterIcon.png') },
+                    { name: 'Help Center', icon: require('../assets/images/helpCenterIcon.png'), screen: 'HelpCenter' },
                     { name: 'Setting', icon: require('../assets/images/settingIcon.png') },
                 ].map((item, index) => (
                     <TouchableOpacity onPress={()=>{ navigation.navigate(item.screen)}} key={index} style={styles.menuItem}>
@@ -68,7 +69,7 @@ const DrawerNavigation = () => {
                 <Drawer.Screen name="MyDoctor" component={MyDoctorScreen} /> 
                 <Drawer.Screen name="MedicalRecords" component={MedicalRecordsScreen} /> 
                 <Drawer.Screen name="MedicineOrders" component={MedicineOrdersScreen} /> 
-
+                <Drawer.Screen name="HelpCenter" component={HelpCenterScreen}/>
             </Drawer.Navigator>
         </NavigationContainer>
     );
