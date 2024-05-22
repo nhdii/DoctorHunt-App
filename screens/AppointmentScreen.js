@@ -7,6 +7,7 @@ import DoctorDetailCard from '../components/doctorDetailCard';
 import { PlusIcon } from 'react-native-heroicons/outline';
 import ButtonComponent from '../components/buttonComponent';
 import GradientCircle from '../components/gradientCircle';
+import HeaderComponent from '../components/headerComponent';
 
 export default function AppointmentScreen({route}) {
     
@@ -32,10 +33,7 @@ export default function AppointmentScreen({route}) {
   return (
     <SafeAreaView style={styles.safeArea}>
         {/* Header */}
-        <View style={styles.header}>
-            <BackArrowIcon onPress={()=> navigation.goBack()} />
-            <TextComponent style={styles.textHeader}>Appointment</TextComponent>
-        </View>
+        <HeaderComponent title="Appointment" />
 
         <View style={styles.bg}>
             <View style={styles.elipse142Container}>

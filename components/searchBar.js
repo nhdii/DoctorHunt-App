@@ -23,7 +23,7 @@ const SearchBar = ({ onChangeText }) => {
             <TextInput
                 placeholder="Search....."
                 placeholderTextColor='rgba(103, 114, 148, 1)'
-                editable={false} // Tắt tính năng chỉnh sửa trực tiếp trên TextInput
+                editable={true} // Tắt tính năng chỉnh sửa trực tiếp trên TextInput
             />
         </TouchableOpacity>
 
