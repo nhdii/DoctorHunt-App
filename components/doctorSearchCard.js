@@ -43,9 +43,15 @@ export default function DoctorSearchCard({doctorInfo, onPress}) {
             doctorInfo && (
                 <View style={styles.rightColumn}>
                     <View style={styles.infoContainer}>
-                        <TextComponent style={styles.nameStyle}>
-                            {doctorInfo.name}
-                        </TextComponent>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <TextComponent style={styles.nameStyle}>
+                                {doctorInfo.name}
+                            </TextComponent>
+
+                            <TouchableOpacity onPress={handleToggleIcon} >
+                                <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"}/>
+                            </TouchableOpacity>
+                        </View>
 
                         <TextComponent style={styles.roleStyle}>
                             {doctorInfo.role}
@@ -71,9 +77,7 @@ export default function DoctorSearchCard({doctorInfo, onPress}) {
                             </View>
                         </View>
 
-                        <TouchableOpacity onPress={handleToggleIcon} >
-                            <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"}/>
-                        </TouchableOpacity>
+                        
                     </View>
 
                     <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
