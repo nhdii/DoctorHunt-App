@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import BackArrowIcon from '../assets/icon/backArrowIcon';
 import TextComponent from '../components/textComponent';
 import CustomScreenComponent from '../components/customScreenComponent';
+import HeaderComponent from '../components/headerComponent';
 
 export default function MedicineOrdersScreen() {
     const navigation = useNavigation();
@@ -22,10 +23,7 @@ export default function MedicineOrdersScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}>
-            <BackArrowIcon onPress={() => navigation.goBack()} />
-            <TextComponent style={styles.textHeader}>Medicine Orders</TextComponent>
-        </View>
+        <HeaderComponent title="Medicines Orders"/>
 
         <CustomScreenComponent 
             {...data}
