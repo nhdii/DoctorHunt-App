@@ -105,7 +105,7 @@ const AddRecordsScreen = ({ }) => {
                 <View style={styles.button}>
                     <ButtonComponent
                         title="Upload Record"
-                        onPress={()=>{}}
+                        onPress={()=>{navigation.navigate('AllRecords')}}
                         width={295}
                         height={54}
                         borderRadius={6}
