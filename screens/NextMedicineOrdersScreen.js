@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import BackArrowIcon from '../assets/icon/backArrowIcon'
 import TextComponent from '../components/textComponent'
 import { useNavigation } from '@react-navigation/native'
@@ -8,6 +8,7 @@ import MedicineOrdersCard from '../components/medicineOrdersCard'
 
 export default function NextMedicineOrdersScreen() {
     const navigation = useNavigation();
+    const [searchText, setSearchText] = useState('');
 
     const medicineOrderData = [
         {
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
 
     safeAreaStyle:{
         flex: 1,
-        padding: 20
+        paddingHorizontal: 20,
+        paddingTop: 36
     },
 
     header: {
