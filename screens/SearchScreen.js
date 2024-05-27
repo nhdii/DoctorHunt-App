@@ -47,6 +47,10 @@ export default function SearchScreen() {
 
     };
 
+    const handleSubmitSearch = (text) => {
+        navigation.navigate('Search', { query: text });
+    };
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -62,6 +66,7 @@ export default function SearchScreen() {
             <View style={styles.searchBar}>
                 <SearchBar
                     onChangeText={handleSearch}
+                    onSubmit={handleSubmitSearch}
                 />
             </View>
 

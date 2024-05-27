@@ -14,6 +14,8 @@ var {width, height} = Dimensions.get('window')
 export default function HomeScreen() {
 
     const navigation = useNavigation();
+    const [searchText, setSearchText] = useState('');
+
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
@@ -73,6 +75,10 @@ export default function HomeScreen() {
 
     };
 
+    const handleSubmitSearch = (text) => {
+        navigation.navigate('Search', { query: text });
+    };
+
     return (
         <SafeAreaView style={{flex: 1}}>
 
@@ -117,6 +123,7 @@ export default function HomeScreen() {
                 <View style={styles.searchBar}>
                     <SearchBar
                         onChangeText={handleSearch}
+                        onSubmit={handleSubmitSearch}
                     />
                 </View>
                 
