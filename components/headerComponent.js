@@ -4,13 +4,13 @@ import BackArrowIcon from '../assets/icon/backArrowIcon'
 import TextComponent from '../components/textComponent'
 import { useNavigation } from '@react-navigation/native'
 
-const HeaderComponent = ({ title }) => {
+const HeaderComponent = ({ title, titleColor }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.header}>
       <BackArrowIcon onPress={() => navigation.goBack()} />
-      <TextComponent style={styles.textHeader}>{title}</TextComponent>
+      <TextComponent style={[styles.textHeader, {color: titleColor}]}>{title}</TextComponent>
     </View>
   )
 }

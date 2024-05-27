@@ -40,11 +40,13 @@ const DrawerContent = (props) => {
             style={{ flex: 1 }}
         >
             <View style={styles.profileContainer}>
-                <Image source={require('../assets/images/Ellipse26.png')} style={styles.avatar} />
-                <View style={styles.profileTextContainer}>
-                    <Text style={styles.profileName}>User Name</Text>
-                    <Text style={styles.profilePhone}>+123456789</Text>
-                </View>
+                <TouchableOpacity onPress={()=>{navigation.navigate('Profile')}} style={styles.profile}>
+                    <Image source={require('../assets/images/Ellipse26.png')} style={styles.avatar} />
+                    <View style={styles.profileTextContainer}>
+                        <Text style={styles.profileName}>User Name</Text>
+                        <Text style={styles.profilePhone}>+123456789</Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={() => props.navigation.closeDrawer()}>
                     <Image source={require('../assets/images/closeIcon.png')} style={styles.closeIcon} />
                 </TouchableOpacity>
@@ -105,6 +107,10 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+
+    profile:{
+        flexDirection: 'row',
     },
     
     avatar: {

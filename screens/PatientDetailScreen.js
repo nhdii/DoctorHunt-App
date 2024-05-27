@@ -41,76 +41,76 @@ const PatientDetailScreen = () => {
         
             <Text style={styles.label}>Age</Text>
             <View style={styles.ageContainer}>
-            <TextInput
-                style={styles.ageInput}
-                placeholder="Day"
-                value={day}
-                onChangeText={setDay}
-                keyboardType="numeric"
-            />
+                <TextInput
+                    style={styles.ageInput}
+                    placeholder="Day"
+                    value={day}
+                    onChangeText={setDay}
+                    keyboardType="numeric"
+                />
 
-            <TextInput
-                style={styles.ageInput}
-                placeholder="Month"
-                value={month}
-                onChangeText={setMonth}
-                keyboardType="numeric"
-            />
-          
-            <TextInput
-                style={styles.ageInput}
-                placeholder="Year"
-                value={year}
-                onChangeText={setYear}
-                keyboardType="numeric"
-            />
-        </View>
+                <TextInput
+                    style={styles.ageInput}
+                    placeholder="Month"
+                    value={month}
+                    onChangeText={setMonth}
+                    keyboardType="numeric"
+                />
+            
+                <TextInput
+                    style={styles.ageInput}
+                    placeholder="Year"
+                    value={year}
+                    onChangeText={setYear}
+                    keyboardType="numeric"
+                />
+            </View>
         
-        <Text style={styles.label}>Gender</Text>
-        <View style={styles.genderContainer}>
-            <TouchableOpacity
-                style={styles.genderOption}
-                onPress={() => setGender('male')}
-            >
-                <View style={gender === 'male' ? styles.radioSelected : styles.radio} />
-                <Text style={styles.genderText}>Male</Text>
-            </TouchableOpacity>
+            <Text style={styles.label}>Gender</Text>
+            <View style={styles.genderContainer}>
+                <TouchableOpacity
+                    style={styles.genderOption}
+                    onPress={() => setGender('male')}
+                >
+                    <View style={gender === 'male' ? styles.radioSelected : styles.radio} />
+                    <Text style={styles.genderText}>Male</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.genderOption}
-                onPress={() => setGender('female')}
-            >
-                <View style={gender === 'female' ? styles.radioSelected : styles.radio} />
-                <Text style={styles.genderText}>Female</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.genderOption}
-                onPress={() => setGender('others')}
-            >
-                <View style={gender === 'others' ? styles.radioSelected : styles.radio} />
-                <Text style={styles.genderText}>Others</Text>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity
+                    style={styles.genderOption}
+                    onPress={() => setGender('female')}
+                >
+                    <View style={gender === 'female' ? styles.radioSelected : styles.radio} />
+                    <Text style={styles.genderText}>Female</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.genderOption}
+                    onPress={() => setGender('others')}
+                >
+                    <View style={gender === 'others' ? styles.radioSelected : styles.radio} />
+                    <Text style={styles.genderText}>Others</Text>
+                </TouchableOpacity>
+            </View>
         
-        <Text style={styles.label}>Mobile Number</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="+8801000000000"
-          value={mobileNumber}
-          onChangeText={setMobileNumber}
-          keyboardType="phone-pad"
-        />
-        
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="itsmemamun1@gmail.com"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
+            <Text style={styles.label}>Mobile Number</Text>
+            <TextInput
+            style={styles.input}
+            placeholder="+8801000000000"
+            value={mobileNumber}
+            onChangeText={setMobileNumber}
+            keyboardType="phone-pad"
+            />
+            
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+            style={styles.input}
+            placeholder="itsmemamun1@gmail.com"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            />
     
-      </View>
+        </View>
         <View style={styles.button}>
             <ButtonComponent
                 title="Continue"

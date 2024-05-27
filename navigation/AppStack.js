@@ -20,6 +20,7 @@ import NextMedicineOrdersScreen from '../screens/NextMedicineOrdersScreen';
 import DiagnosticsTestsScreen from '../screens/DiagonsticsScreen';
 import PatientScreen from '../screens/PatientScreen';
 import PatientDetailScreen from '../screens/PatientDetailScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -47,7 +48,8 @@ const AppStack = () => {
       <Stack.Screen name="DiagnosticsTests" component={DiagnosticsTestsScreen}/>
       <Stack.Screen name="PatientScreen" component={PatientScreen}/>
       <Stack.Screen name="PatientDetail" component={PatientDetailScreen}/>
-      
+      <Stack.Screen name="Profile" component={ProfileScreen}/>
+
     </Stack.Navigator>
   );
 };
