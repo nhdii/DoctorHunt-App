@@ -1,6 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import AppStack from './AppStack';
@@ -18,6 +18,22 @@ const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => { 
     const navigation = useNavigation();
+
+    const handleLogout = () => {
+        Alert.alert(
+            "Logout",
+            "Are you sure you want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+    };
+
     return (
         <LinearGradient
             colors={['#6F7FA1', '#536184']}
@@ -53,7 +69,7 @@ const DrawerContent = (props) => {
                 ))}
             </View>
 
-            <TouchableOpacity style={styles.logoutButton}>
+            <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
                 <ArrowLeftStartOnRectangleIcon size={24} color="rgba(255, 255, 255, 1)"/>
                 <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
