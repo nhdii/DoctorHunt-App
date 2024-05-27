@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 
-const DoctorTab = ({ icon, color }) => {
+const DoctorTab = ({ icon, widthIcon, heightIcon, color, width, height }) => {
   return (
     <View style={styles.container}>
         {/* Background Ellipses */}
-        <View style={[styles.ellipseContainer, { backgroundColor: color }]}>
+        <View style={[styles.ellipseContainer, { backgroundColor: color, width: width, height: height }]}>
             <View style={styles.ellipse149}></View>
             <View style={styles.ellipse148}></View>
 
             {/* Icon */}
-            <View style={styles.iconContainer}>
+            <View style={[styles.iconContainer, {width: widthIcon, height: heightIcon}]}>
                 <Image source={icon} style={styles.icon} />
             </View>
         </View>
