@@ -107,6 +107,7 @@ export default function LiveStream() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 36,
     backgroundColor: 'gray',
   },
   header: {
