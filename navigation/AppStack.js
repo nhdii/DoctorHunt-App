@@ -17,6 +17,9 @@ import SignUpScreen from '../authentication/SignUpScreen';
 import DrawerNavigation from './drawerNavigation'; // Import DrawerNavigation
 import AddRecordsScreen from '../screens/AddRecordsScreen';
 import NextMedicineOrdersScreen from '../screens/NextMedicineOrdersScreen';
+import DiagnosticsTestsScreen from '../screens/DiagonsticsScreen';
+import PatientScreen from '../screens/PatientScreen';
+import PatientDetailScreen from '../screens/PatientDetailScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,7 +44,10 @@ const AppStack = () => {
 
       <Stack.Screen name="AddRecords" component={AddRecordsScreen}/>
       <Stack.Screen name="NextMedicineOrders" component={NextMedicineOrdersScreen}/>
-
+      <Stack.Screen name="DiagnosticsTests" component={DiagnosticsTestsScreen}/>
+      <Stack.Screen name="PatientScreen" component={PatientScreen}/>
+      <Stack.Screen name="PatientDetail" component={PatientDetailScreen}/>
+      
     </Stack.Navigator>
   );
 };
