@@ -14,7 +14,7 @@ export default function TestBookingsScreen() {
         button: {
             text: 'Book Now',
             onPress: () => {
-                navigation.navigate('NextMedicineOrders')
+                navigation.navigate('DiagnosticsTests')
             },
         },
     };
