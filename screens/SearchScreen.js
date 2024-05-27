@@ -57,7 +57,7 @@ export default function SearchScreen() {
             {/* Header */}
             <View style={styles.header}>
                 <BackArrowIcon onPress={() => navigation.goBack()} />
-                <TextComponent style={styles.textHeader}>
+                <TextComponent fontSize={18} fontWeight='400' lineHeight={21.33} color='rgba(34, 34, 34, 1)' style={{marginLeft: 19}}>
                     Find Doctors
                 </TextComponent>
             </View>
@@ -107,14 +107,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
 
-    textHeader: {
-        fontSize: 18,
-        fontWeight: '400',
-        lineHeight: 21.33,
-        letterSpacing: -0.3,
-        color: 'rgba(34, 34, 34, 1)',
-        marginLeft: 19,
-    },
 
     searchBar:{
         marginTop: 36,

@@ -99,8 +99,8 @@ export default function HomeScreen() {
                     <LinearGradient colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} start={{x: 0, y: 0}} end={{x: 1, y: 1}} style={styles.rectangle} />
                     <View style={styles.groupContainer}>
                         <View style={styles.text}>
-                            <Text style={styles.greetingText}>Hi Handwerker!</Text>
-                            <Text style={styles.titleText}>Find Your Doctor</Text>
+                            <TextComponent fontSize={20} fontWeight="400" lineHeight={23.7} color="rgba(250, 250, 250, 1)" style={{marginBottom: 6}}>Hi Handwerker!</TextComponent>
+                            <TextComponent fontSize={25} fontWeight="700" lineHeight={29.63} color='rgba(255, 255, 255, 1)' >Find Your Doctor</TextComponent>
                         </View>
                         <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())} style={styles.image}>
                             <Image source={require('../assets/images/Ellipse26.png')}/>
@@ -128,7 +128,7 @@ export default function HomeScreen() {
                 </View>
                 
                 <View style={styles.section}>
-                    <TextComponent style={styles.sectionTitle}>Live Doctors</TextComponent>
+                    <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)' style={{marginTop: 30}}>Live Doctors</TextComponent>
 
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         {/* Render list of live doctors here */}
@@ -177,10 +177,10 @@ export default function HomeScreen() {
                 {/* popular Doctor */}
                 <View style={styles.popularDoctor}>
                     <View style={styles.headline}>
-                        <TextComponent style={styles.title}>Popular Doctor</TextComponent>
+                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
 
                         <TouchableOpacity>
-                            <Text style={{fontSize: 18, paddingRight: 22}}>See all </Text>
+                            <TextComponent fontSize={18} style={{paddingRight: 22}}>See all </TextComponent>
                         </TouchableOpacity>
                     </View>
 
@@ -204,10 +204,10 @@ export default function HomeScreen() {
                 {/* feature Doctor */}
                 <View style={styles.featureDoctor}>
                     <View style={styles.headline}>
-                        <TextComponent style={styles.title}>Feature Doctor</TextComponent>
+                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
 
                         <TouchableOpacity>
-                            <Text style={{fontSize: 14, paddingRight: 16, color: 'rgba(103, 114, 148, 1)'  }}>See all </Text>
+                            <TextComponent fontSize={14} color='rgba(103, 114, 148, 1)' style={{ paddingRight: 16}}>See all </TextComponent>
                         </TouchableOpacity>
                     </View>
 
@@ -295,26 +295,6 @@ const styles = StyleSheet.create({
         marginTop: 8
     },
 
-    greetingText: {
-        height: 22, 
-        fontFamily: 'Rubik',
-        fontWeight: '400',
-        fontSize: 20,
-        lineHeight: 23.7, 
-        letterSpacing: -0.3,
-        color: 'rgba(250, 250, 250, 1)'
-    },
-
-    titleText: {
-        paddingTop: 6,
-        fontFamily: 'Rubik',
-        fontWeight: '700',
-        fontSize: 25,
-        lineHeight: 29.63, 
-        letterSpacing: -0.3,
-        color: 'rgba(255, 255, 255, 1)'
-    },
-
     image: {
         width: 60,
         height: 60,
@@ -324,14 +304,6 @@ const styles = StyleSheet.create({
 
     section: {
         paddingLeft: 19,
-    },
-
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        lineHeight: 21.33,
-        paddingTop: 30,
-        color: 'rgba(51, 51, 51, 1)'
     },
 
     doctorCard: {
@@ -363,14 +335,6 @@ const styles = StyleSheet.create({
     headline:{
         flexDirection: 'row',
         justifyContent: 'space-between',
-    },
-    
-    title:{
-        fontSize: 18,
-        fontWeight: '500',
-        lineHeight: 21.33,
-        letterSpacing: -0.3,
-        color: 'rgba(51, 51, 51, 1)'    
     },
 
     featureDoctor:{

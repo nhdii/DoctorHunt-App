@@ -5,6 +5,7 @@ import BackArrowIcon from '../assets/icon/backArrowIcon';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import TextComponent from '../components/textComponent';
 import DoctorSelectCard from '../components/doctorSelectCard';
+import HeaderComponent from '../components/headerComponent'; 
 
 export default function SelectTimeScreen() {
 
@@ -79,10 +80,7 @@ export default function SelectTimeScreen() {
     return (
         <SafeAreaView style={styles.container}>
             {/* Header */}
-            <View style={styles.header}>
-                <BackArrowIcon onPress={() => navigation.goBack()} />
-                <TextComponent style={styles.textHeader}>Select Time</TextComponent>
-            </View>
+            <HeaderComponent title="Select Time" titleColor="rgba(34, 34, 34, 1)"/>
 
             {/* Doctor Card */}
             <DoctorSelectCard doctorInfo={doctorInfo} />
@@ -98,18 +96,18 @@ export default function SelectTimeScreen() {
                             selectedTab === index && { backgroundColor: 'rgba(14, 190, 127, 1)' }
                         ]}
                     >
-                        <Text style={styles.tabText}>{tab.date}</Text>
+                        <TextComponent fontSize={14} fontWeight='bold' color="rgba(0, 0, 0, 0.7)">{tab.date}</TextComponent>
                         {tab.slots.length > 0 ? (
-                            <Text style={styles.tabSlotText}>{`${tab.slots.length} slots available`}</Text>
+                            <TextComponent fontSize={12} color="rgba(0, 0, 0, 0.5)">{`${tab.slots.length} slots available`}</TextComponent>
                         ) : (
-                            <Text style={styles.tabSlotText}>No slots available</Text>
+                            <TextComponent fontSize={12} color="rgba(0, 0, 0, 0.5)">No slots available</TextComponent>
                         )}
                     </TouchableOpacity>
                 ))}
             </ScrollView>
 
             <View style={styles.selectedInfo}>
-                <TextComponent style={styles.selectedDayText}>{tabsData[selectedTab].date}</TextComponent>
+                <TextComponent fontSize={16} fontWeight='bold' lineHeight={18.96} color='rgba(34, 34, 34, 1)' style={{textAlign: 'center'}}>{tabsData[selectedTab].date}</TextComponent>
                 {tabsData[selectedTab].slots.length > 0 ? (
                     <View style={styles.slotContainer}>
                         {Object.entries(classifySlots(tabsData[selectedTab].slots)).map(([timeOfDay, slots]) => (
@@ -211,14 +209,6 @@ const styles = StyleSheet.create({
     selectedInfo: {
         marginTop: 20,
         // alignItems: 'center'
-    },
-
-    selectedDayText:{
-        fontSize: 16,
-        fontWeight: '500',
-        lineHeight: 18.96,
-        color: 'rgba(34, 34, 34, 1)',
-        textAlign: 'center'
     },
 
     slotContainer:{
