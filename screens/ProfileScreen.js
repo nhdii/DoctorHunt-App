@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar } from 'react-native';
 import HeaderComponent from '../components/headerComponent';
 import LinearGradient from 'react-native-linear-gradient'
+import TextComponent from '../components/textComponent';
+import { CameraIcon, PencilIcon } from 'react-native-heroicons/solid';
+import ButtonComponent from '../components/buttonComponent';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
-  const [name, setName] = useState('Abdullah Mamun');
-  const [contactNumber, setContactNumber] = useState('+8801800000000');
-  const [dob, setDob] = useState('');
-  const [location, setLocation] = useState('');
 
-  const handleContinue = () => {
-    // Handle the continue action
-  };
+    const navigation = useNavigation();
+    const [name, setName] = useState('Abdullah Mamun');
+    const [contactNumber, setContactNumber] = useState('+8801800000000');
+    const [dob, setDob] = useState('');
+    const [location, setLocation] = useState('');
+
+    const handleContinue = () => {
+        // Handle the continue action
+    };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,71 +37,93 @@ const ProfileScreen = () => {
             <HeaderComponent title="Profile" titleColor="rgba(255, 255, 255, 1)"/>
 
             <View style={styles.profileSection}>
-                <Text style={styles.subtitle}>Set up your profile</Text>
-                <Text style={styles.description}>Update your profile to connect your doctor with better impression.</Text>
+                <TextComponent style={styles.subtitle}>Set up your profile</TextComponent>
+                <TextComponent style={styles.description}>Update your profile to connect your doctor with better impression.</TextComponent>
                 <View style={styles.profileImageContainer}>
                     <Image
                         style={styles.profileImage}
                         source={{ uri: 'https://via.placeholder.com/100' }} // Placeholder image URL
                     />
                     <TouchableOpacity style={styles.cameraIcon}>
-                        <Text style={styles.cameraIconText}>📷</Text>
+                        <CameraIcon size={20} color="white"/>
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
 
-      <View style={styles.form}>
-        <Text style={styles.label}>Personal information</Text>
+        <View style={styles.form}>
+            <TextComponent style={styles.label}>Personal information</TextComponent>
 
-        <View style={styles.inputGroup}>
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            value={name}
-            onChangeText={setName}
-          />
-          <TouchableOpacity style={styles.editIcon}>
-            <Text>✏️</Text>
-          </TouchableOpacity>
+            <View style={styles.inputGroup}>
+                <View style={styles.inputContainer}>
+                    <TextComponent style={styles.inputTitle}>Name</TextComponent>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Abdullah Mamun"
+                        value={name}
+                        onChangeText={setName}
+                    />
+                </View>
+
+            </View>
+
+            <View style={styles.inputGroup}>
+                <View style={styles.inputContainer}>
+                    <TextComponent style={styles.inputTitle}>Contact Number</TextComponent>
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Contact Number"
+                        value={contactNumber}
+                        onChangeText={setContactNumber}
+                        keyboardType="phone-pad"
+                    />
+                </View>
+                <TouchableOpacity style={styles.editIcon}>
+                    <PencilIcon size={20} color="rgba(103, 114, 148, 1)" />
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputGroup}>
+                <View style={styles.inputContainer}>
+                    <TextComponent style={styles.inputTitle}>Contact Number</TextComponent>
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Date of Birth"
+                        value={dob}
+                        onChangeText={setDob}
+                    />
+                </View>
+                <TouchableOpacity style={styles.editIcon}>
+                    <PencilIcon size={20} color="rgba(103, 114, 148, 1)" />
+                </TouchableOpacity>
+            </View>
+
+            <View  style={styles.inputGroup}>
+                <View style={styles.inputContainer}>
+                    <TextComponent style={styles.inputTitle}>Location</TextComponent>
+
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Add Detail"
+                        value={location}
+                        onChangeText={setLocation}
+                    />
+                </View>
+            </View>
+
+            <View style={styles.button}>
+                <ButtonComponent
+                    title="Continue"
+                    onPress={()=>{navigation.navigate('EditProfile')}}
+                    width={295}
+                    height={54}
+                    borderRadius={6}
+                    textSize={18}
+                />
+            </View>
         </View>
-
-        <View style={styles.inputGroup}>
-          <TextInput
-            style={styles.input}
-            placeholder="Contact Number"
-            value={contactNumber}
-            onChangeText={setContactNumber}
-            keyboardType="phone-pad"
-          />
-          <TouchableOpacity style={styles.editIcon}>
-            <Text>✏️</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.inputGroup}>
-          <TextInput
-            style={styles.input}
-            placeholder="Date of Birth"
-            value={dob}
-            onChangeText={setDob}
-          />
-          <TouchableOpacity style={styles.editIcon}>
-            <Text>✏️</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Location"
-          value={location}
-          onChangeText={setLocation}
-        />
-
-        <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-          <Text style={styles.continueButtonText}>Continue</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };
@@ -111,7 +139,8 @@ const styles = StyleSheet.create({
     height: 357,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    backgroundColor: 'rgba(14, 190, 127, 1)'
+    backgroundColor: 'rgba(14, 190, 127, 1)',
+    marginBottom: 15,
   },
 
   profileSection:{
@@ -119,81 +148,94 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 10,
+    color: 'rgba(255, 255, 255, 1)'
   },
 
   description: {
     fontSize: 14,
     textAlign: 'center',
-    marginBottom: 10,
-    color: '#666',
+    marginBottom: 22,
+    color: 'rgba(255, 255, 255, 1)',
   },
 
   profileImageContainer: {
     position: 'relative',
     marginBottom: 20,
   },
+
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 130,
+    height: 130,
+    borderRadius: 65,
   },
+
   cameraIcon: {
+    width: 36,
+    height: 36,
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: '#FFF',
+    backgroundColor: 'rgba(103, 114, 148, 0.8)',
     borderRadius: 50,
     padding: 5,
-    borderWidth: 1,
-    borderColor: '#CCC',
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
-  cameraIconText: {
-    fontSize: 18,
-  },
+
   form: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
+    paddingHorizontal: 20,
+
   },
+
   label: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 21.33,
+    color: 'rgba(51, 51, 51, 1)',
+    marginBottom: 12,
   },
+
   inputGroup: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+
   },
+
+  inputContainer:{
+    paddingTop: 9,
+    flexDirection: 'column',
+    height: 60,
+    
+  },
+
+  inputTitle:{
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'rgba(14, 190, 127, 1)'
+  },
+
   input: {
-    flex: 1,
-    height: 40,
-    borderColor: '#E0E0E0',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#F5F5F5',
+    flex: 1, 
+    borderRadius: 12,
   },
+
   editIcon: {
     marginLeft: 10,
   },
-  continueButton: {
-    backgroundColor: '#00C853',
-    paddingVertical: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  continueButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+
+  button:{
+    alignItems: 'center'
+
+    }
 });
 
 export default ProfileScreen;
