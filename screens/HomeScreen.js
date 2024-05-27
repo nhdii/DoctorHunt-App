@@ -149,19 +149,19 @@ export default function HomeScreen() {
                 <View style={styles.doctorTab}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         <TouchableOpacity>
-                            <DoctorTab icon={dentistIcon} color="#2753F3" />
+                            <DoctorTab icon={dentistIcon} widthIcon={33} heightIcon={37.3} color="#2753F3" width={80} height={90} />
                         </TouchableOpacity>
 
                         <TouchableOpacity>
-                            <DoctorTab icon={heartIcon} color="#0EBE7E" />
+                            <DoctorTab icon={heartIcon} widthIcon={33} heightIcon={37.3} color="#0EBE7E" width={80} height={90}/>
                         </TouchableOpacity>
 
                         <TouchableOpacity>
-                            <DoctorTab icon={eyeIcon} color="#FE7F44" />
+                            <DoctorTab icon={eyeIcon} widthIcon={33} heightIcon={37.3} color="#FE7F44" width={80} height={90}/>
                         </TouchableOpacity>
 
                         <TouchableOpacity>
-                            <DoctorTab icon={bodyIcon} color="#FF484C" />
+                            <DoctorTab icon={bodyIcon} widthIcon={33} heightIcon={37.3} color="#FF484C" width={80} height={90}/>
                         </TouchableOpacity>
 
                     </ScrollView>
