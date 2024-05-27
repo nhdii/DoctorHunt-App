@@ -108,6 +108,10 @@ export default function FavouriteScreen() {
 
     };
 
+    const handleSubmitSearch = (text) => {
+        navigation.navigate('Search', { query: text });
+    };
+
   return (
     <SafeAreaView style={{flex: 1}}>
         <LinearGradient 
@@ -135,6 +139,7 @@ export default function FavouriteScreen() {
             <View style={styles.searchBar}>
                 <SearchBar
                     onChangeText={handleSearch}
+                    onSubmit={handleSubmitSearch}
                 />
             </View>
 
