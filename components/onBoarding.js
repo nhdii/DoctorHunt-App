@@ -33,13 +33,15 @@ export default function OnBoardingScreen({ imageSource, title, content, nextScre
             {/* Text container */}
             <View style={styles.textContainer}>
                 <View style={styles.titleContainer}>
-                    <TextComponent style={styles.title}>{title}</TextComponent>
+                    <TextComponent fontSize={28} fontWeight='bold' lineHeight={33.18} color='rgba(51, 51, 51, 1)'  style={{textAlign: 'center'}}>
+                        {title}
+                    </TextComponent>
                 </View>
 
                 <View style={styles.contentContainer}>
-                    <Text style={styles.content}>
+                    <TextComponent fontSize={14} fontWeight='400' lineHeight={23.18} color='rgba(103, 114, 148, 0.9)' style={{marginTop: 10, textAlign: 'center', width: 289}}>
                         {content}
-                    </Text>
+                    </TextComponent>
                 </View>
             </View>
 
@@ -55,9 +57,9 @@ export default function OnBoardingScreen({ imageSource, title, content, nextScre
                 />
 
                 <TouchableOpacity onPress={handleSkip}>
-                    <Text style={styles.textButtonStyle}>
+                    <TextComponent fontSize={14} fontWeight='400' lineHeight={23.18} color='rgba(103, 114, 148, 1)' style={{marginTop: 10}}>
                         Skip
-                    </Text>
+                    </TextComponent>
                 </TouchableOpacity>
             </View>
 
@@ -106,38 +108,10 @@ const styles = StyleSheet.create({
         zIndex: -1,
     },
 
-    title: {
-        width: 295,
-        height: 33,
-        textAlign: 'center',
-        fontSize: 28, 
-        fontWeight: '500', 
-        lineHeight: 33.18,
-        color: '#333333'
-    },
-
-    content: {
-        top: 10,
-        width: 289,
-        textAlign: 'center',
-        fontSize: 14, 
-        fontWeight: '400', 
-        lineHeight: 23.18, 
-        color: '#677294E5',
-    },
-
     buttonContainer: {
         height: 180,
         top: 48,
         alignItems: 'center',
-    },
-
-    textButtonStyle: {
-        top: 10,
-        fontSize: 14, 
-        fontWeight: '400',
-        lineHeight: 23.18,
-        color: '#677294'
     },
 
     elipse143Container: {
