@@ -179,7 +179,7 @@ export default function HomeScreen() {
                     <View style={styles.headline}>
                         <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('PopularDoctor')}}>
                             <TextComponent fontSize={18} style={{paddingRight: 22}}>See all </TextComponent>
                         </TouchableOpacity>
                     </View>
