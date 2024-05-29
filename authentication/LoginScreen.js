@@ -4,6 +4,7 @@ import ButtonComponent from '../components/buttonComponent';
 import TextComponent from '../components/textComponent';
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
+import GradientCircle from '../components/gradientCircle';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -157,17 +158,28 @@ const LoginScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.greetingTitle}>Welcome back</Text>
-        <Text style={styles.greeting}>You can search course, apply course and find scholarship for abroad studies</Text>
+
+        {/* Gradient Circle */}
+        <View style={styles.topGradientCircleContainer}>
+            <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+        </View>
+        <View style={styles.bottomGradientCircleContainer}>
+            <GradientCircle size={257} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+        </View>
+
+
+        <TextComponent fontSize={24} fontWeight='bold' lineHeight={28.44} color='rgba(0, 0, 0, 1)'>Welcome back</TextComponent>
+      
+        <TextComponent fontSize={14} fontWeight='400' lineHeight={23.18} color='rgba(103, 114, 148, 1)' style={{width: 284, textAlign: 'center', marginTop: 15}}>You can search course, apply course and find scholarship for abroad studies</TextComponent>
 
         <View style={styles.socialContainer}>
           <TouchableOpacity style={[styles.socialButton, { marginRight: 15 }]}>
             <Image source={require('../assets/icon/google.png')} />
-            <Text style={styles.socialButtonText}>Google</Text>
+            <TextComponent fontSize={16} fontWeight='300' lineHeight={18.96} color='rgba(103, 114, 148, 1)' style={{marginLeft: 12.83}}>Google</TextComponent>
           </TouchableOpacity>
           <TouchableOpacity style={styles.socialButton}>
             <Image source={require('../assets/icon/facebook.png')} />
-            <Text style={styles.socialButtonText}>Facebook</Text>
+            <TextComponent fontSize={16} fontWeight='300' lineHeight={18.96} color='rgba(103, 114, 148, 1)' style={{marginLeft: 12.83}}>Facebook</TextComponent>
           </TouchableOpacity>
         </View>
 
@@ -205,16 +217,16 @@ const LoginScreen = () => {
 
         <View style={styles.footerContainer}>
           <TouchableOpacity onPress={showModal}>
-            <TextComponent style={styles.forgotPassword}>
+            <TextComponent fontSize={14} fontWeight='400' lineHeight={16.59} color='rgba(14, 190, 127, 1)' style={{marginTop: 19}}>
               Forgot password
             </TextComponent>
           </TouchableOpacity>
           <View style={styles.questionContainer}>
-            <TextComponent style={styles.question}>
+            <TextComponent fontSize={14} fontWeight='400' lineHeight={16.59} color='rgba(14, 190, 127, 1)' style={{marginTop: 19}}>
               Don't have an account?
             </TextComponent>
             <TouchableOpacity onPress={() => {navigation.navigate('SignUp')}}>
-              <TextComponent style={styles.joinUs}> Join us</TextComponent>
+              <TextComponent fontSize={14} fontWeight='400' lineHeight={16.59} color='rgba(14, 190, 127, 1)' style={{marginTop: 19, textAlign: 'center'}}> Join us</TextComponent>
             </TouchableOpacity>
           </View>
         </View>
@@ -240,10 +252,10 @@ const LoginScreen = () => {
               <View style={styles.descriptionContainer}>
                 {isCodeSent ? (
                   <>
-                    <Text style={styles.modalTitle}>Enter 4 Digits Code</Text>
-                    <Text style={styles.modalDescription}>
+                    <TextComponent fontSize={24} lineHeight={28.44} fontWeight='bold' color='rgba(0, 0, 0, 1)'  style={{marginBottom: 12}}>Enter 4 Digits Code</TextComponent>
+                    <TextComponent fontSize={14} fontWeight='400' lineHeight={21.18} color='rgba(103, 114, 148, 1)' style={{marginBottom: 27}}>
                       Enter the 4 digits code that you received on your email.
-                    </Text>
+                    </TextComponent>
                     <View style={styles.codeInputContainer}>
                       {code.map((digit, index) => (
                         <TextInput
@@ -259,10 +271,10 @@ const LoginScreen = () => {
                   </>
                 ) : (
                   <>
-                    <Text style={styles.modalTitle}>Forgot Password</Text>
-                    <Text style={styles.modalDescription}>
+                    <TextComponent fontSize={24} lineHeight={28.44} fontWeight='bold' color='rgba(0, 0, 0, 1)'  style={{marginBottom: 12}}>Forgot Password</TextComponent>
+                    <TextComponent fontSize={14} fontWeight='400' lineHeight={21.18} color='rgba(103, 114, 148, 1)' style={{marginBottom: 27}}>
                       Enter your email for the verification process, we will send a 4-digit code to your email.
-                    </Text>
+                    </TextComponent>
                     <TextInput
                       style={styles.modalEmailInput}
                       placeholder="Email"
@@ -308,12 +320,12 @@ const LoginScreen = () => {
 
               <View style={styles.descriptionContainer}>
 
-                <Text style={styles.modalTitle}>Reset Password</Text>
+                <TextComponent fontSize={24} lineHeight={28.44} fontWeight='bold' color='rgba(0, 0, 0, 1)'  style={{marginBottom: 12}}>Reset Password</TextComponent>
 
-                <Text style={styles.modalDescription}> 
+                <TextComponent fontSize={14} fontWeight='400' lineHeight={21.18} color='rgba(103, 114, 148, 1)' style={{marginBottom: 27}}>
                   can login and access all the features.
                   Set the new password for your account so you
-                </Text>
+                </TextComponent>
 
                 <View>
                   <TextInput
@@ -369,23 +381,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  greetingTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    lineHeight: 28.44,
-    color: 'rgba(0, 0, 0, 1)',
-  },
-
-  greeting: {
-    width: 284,
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 23.18,
-    textAlign: 'center',
-    marginTop: 15,
-    color: 'rgba(103, 114, 148, 1)',
-  },
-
   socialContainer: {
     flexDirection: 'row',
   },
@@ -401,14 +396,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 1)',
     elevation: 3,
-  },
-
-  socialButtonText: {
-    color: 'rgba(103, 114, 148, 1)',
-    fontSize: 16,
-    fontWeight: '300',
-    lineHeight: 18.96,
-    marginLeft: 12.83,
   },
 
   emailInput: {
@@ -463,26 +450,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  forgotPassword: {
-    marginTop: 19,
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 16.59,
-    color: 'rgba(14, 190, 127, 1)',
-  },
-
   questionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
 
-  question: {
-    fontSize: 14,
-    fontWeight: '400',
-    lineHeight: 16.59,
-    textAlign: 'center',
-    color: 'rgba(14, 190, 127, 1)',
-  },
 
   joinUs: {
     fontSize: 14,
@@ -554,23 +526,6 @@ const styles = StyleSheet.create({
     marginLeft: -39,
   },
 
-  modalTitle: {
-    fontSize: 24,
-    lineHeight: 28.44,
-    letterSpacing: -0.3,
-    fontWeight: 'bold',
-    marginBottom: 12,
-    color: 'rgba(0, 0, 0, 1)',
-  },
-
-  modalDescription: {
-    fontSize: 14,
-    lineHeight: 21.18,
-    fontWeight: '400',
-    marginBottom: 27,
-    color: 'rgba(103, 114, 148, 1)',
-  },
-
   modalEmailInput: {
     width: 335,
     height: 54,
@@ -612,6 +567,18 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginRight: 16.83,
     textAlign: 'center',
+  },
+
+  topGradientCircleContainer: {
+    position: 'absolute',
+    top: -33,
+    left: -99,
+  },
+
+  bottomGradientCircleContainer: {
+      position: 'absolute',
+      bottom: -74,
+      right: -90,
   },
 });
 
