@@ -16,13 +16,14 @@ export default function ButtonComponent({ title, onPress, width = 140, height = 
 const styles = StyleSheet.create({
 
     button: {
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      buttonText: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        lineHeight: 16.59,
-        color: 'rgba(255, 255, 255, 1)'
-      }
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    
+    buttonText: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      lineHeight: 16.59,
+      color: 'rgba(255, 255, 255, 1)',
+    }
 })

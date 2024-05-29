@@ -63,9 +63,9 @@ export default function OnBoardingScreen({ imageSource, title, content, nextScre
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.elipse143Container}>
-                <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 1)']} color="rgba(14, 190, 126, 0.3)" />
-            </View>    
+            <View style={styles.bottomGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>  
         </SafeAreaView>
     )
 }
@@ -114,14 +114,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    elipse143Container: {
-        width: 216,
-        height: 216,
-        borderRadius: 108,
+    bottomGradientCircleContainer: {
         position: 'absolute',
         bottom: -45,
-        left: 212,
-        zIndex: -1,
-        backgroundColor: 'rgba(14, 190, 126, 0.3)'
+        right: -53,
     },
 })

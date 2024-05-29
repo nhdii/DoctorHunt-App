@@ -6,6 +6,7 @@ import TextComponent from '../components/textComponent';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import CustomScreenComponent from '../components/customScreenComponent';
 import AddRecordsAlert from '../components/addRecordsAlert';
+import GradientCircle from '../components/gradientCircle';
 
 export default function MedicalRecordsScreen() {
     const navigation = useNavigation();
@@ -31,6 +32,17 @@ export default function MedicalRecordsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+        {/* Gradient Circle */}
+        <View style={styles.bg}>
+            <View style={styles.topGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>
+            
+            <View style={styles.bottomGradientCircleContainer}>
+                <GradientCircle size={257} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>
+        </View>
+
         <View style={styles.header}>
             <BackArrowIcon onPress={() => navigation.goBack()} />
             <TextComponent style={styles.textHeader}>Medical Records</TextComponent>
@@ -55,6 +67,7 @@ export default function MedicalRecordsScreen() {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         paddingHorizontal: 20,
         paddingTop: 36
     },
@@ -72,6 +85,30 @@ const styles = StyleSheet.create({
         letterSpacing: -0.3,
         color: 'rgba(34, 34, 34, 1)',
         marginLeft: 19,
+    },
+
+    bg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        zIndex: -10
+    },
+    
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -32,
+        left: -72,
+    },
+
+    bottomGradientCircleContainer: {
+        position: 'absolute',
+        bottom: -90,
+        right: -70,
     },
 
 })

@@ -5,6 +5,7 @@ import BackArrowIcon from '../assets/icon/backArrowIcon';
 import TextComponent from '../components/textComponent';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
+import GradientCircle from '../components/gradientCircle';
 
 export default function DoctorDetailScreen({ route }) {
   const navigation = useNavigation();
@@ -29,6 +30,16 @@ export default function DoctorDetailScreen({ route }) {
             translucent={true}
         />
       </LinearGradient>
+
+      <View style={styles.bg}>
+        <View style={styles.topGradientCircleContainer}>
+            <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+        </View>
+        
+        <View style={styles.bottomGradientCircleContainer}>
+            <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+        </View>
+      </View>
       
       <ScrollView contentContainerStyle={styles.container}>
         {/* Header */}
@@ -198,5 +209,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 1)'
-  }
+  },
+
+  bg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+  topGradientCircleContainer: {
+      position: 'absolute',
+      top: -33,
+      left: -88,
+  },
+
+  bottomGradientCircleContainer: {
+      position: 'absolute',
+      bottom: -29,
+      right: -30,
+  },
 })

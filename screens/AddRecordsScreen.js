@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, SafeAreaView, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import BackArrowIcon from '../assets/icon/backArrowIcon';
 import TextComponent from '../components/textComponent';
+import HeaderComponent from '../components/headerComponent';
 import {PlusIcon } from 'react-native-heroicons/outline';
 import { PencilIcon } from 'react-native-heroicons/solid';
 import ButtonComponent from '../components/buttonComponent';
 
 import { useNavigation } from '@react-navigation/native';
+import GradientCircle from '../components/gradientCircle';
 
 const AddRecordsScreen = ({ }) => {
   const [name, setName] = useState('Abdullah Mamun');
@@ -33,9 +34,15 @@ const AddRecordsScreen = ({ }) => {
 
   return (
     <SafeAreaView style={styles.safeAreaStyle}>
+
+        {/* Gradient Circle*/}
+        <View style={styles.topGradientCircleContainer}>
+            <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+        </View>
+                
+                
         <View style={styles.header}>
-            <BackArrowIcon onPress={() => navigation.goBack()} />
-            <TextComponent style={styles.textHeader}>Add Records</TextComponent>
+            <HeaderComponent title="Add Records" titleColor='rgba(51, 51, 51, 1)'/>
         </View>
         
         <View style={styles.container}>
@@ -124,11 +131,14 @@ const styles = StyleSheet.create({
     safeAreaStyle: {
         flex: 1,
     },
+    
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -32,
+        left: -72,
+    },
 
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 34,
         marginLeft: 20,
         marginTop: 36,
     },

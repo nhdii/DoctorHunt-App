@@ -49,6 +49,16 @@ export default function MyDoctorScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
+            {/* Gradient Circle */}
+            <View style={styles.bg}>
+                <View style={styles.topGradientCircleContainer}>
+                    <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
+                
+                <View style={styles.bottomGradientCircleContainer}>
+                    <GradientCircle size={257} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
+            </View>
 
             {/* Header */}
             <View style={styles.header}>
@@ -74,16 +84,6 @@ export default function MyDoctorScreen() {
                     />
                 ))}
             </ScrollView>
-
-            <View style={styles.bg}>
-                <View style={styles.elipse142Container}>
-                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
-                </View>
-                
-                <View style={styles.elipse143Container}>
-                    <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
-                </View>
-            </View>
         </SafeAreaView>
     )
 }
@@ -123,28 +123,26 @@ const styles = StyleSheet.create({
 
     bg: {
         position: 'absolute',
-        width: width,
-        height: height,
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        zIndex: -1
-      },
+        zIndex: -10
+    },
     
-      elipse142Container:{
-        width: 216,
-        height: 216,
+    topGradientCircleContainer: {
+        position: 'absolute',
         top: -32,
         left: -72,
-      },
-    
-      elipse143Container: {
-        width: 216,
-        height: 216,
+    },
+
+    bottomGradientCircleContainer: {
         position: 'absolute',
-        bottom: -63,
-        right: -68,
-      },
-    
+        bottom: -90,
+        right: -70,
+    },
 
 })

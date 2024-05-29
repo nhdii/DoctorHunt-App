@@ -6,6 +6,7 @@ import TextComponent from '../components/textComponent';
 import ButtonComponent from '../components/buttonComponent';
 import { Calendar } from 'react-native-calendars';
 import CustomAlert from '../components/customAlert';
+import GradientCircle from '../components/gradientCircle';
 
 export default function AppointmentSelectTimeScreen({ route }) {
     const navigation = useNavigation();
@@ -67,6 +68,10 @@ export default function AppointmentSelectTimeScreen({ route }) {
 
     return (
         <SafeAreaView style={styles.safeArea}>
+            {/* Gradient Circle */}
+            <View style={styles.topGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>
             {/* Header */}
             <View style={styles.header}>
                 <BackArrowIcon onPress={() => navigation.goBack()} />
@@ -156,6 +161,12 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         paddingTop: 36,
+    },
+
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -33,
+        left: -77,
     },
 
     header: {

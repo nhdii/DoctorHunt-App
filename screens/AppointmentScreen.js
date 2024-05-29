@@ -32,18 +32,20 @@ export default function AppointmentScreen({route}) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-        {/* Header */}
-        <HeaderComponent title="Appointment" />
 
+        {/* Gradient Circle */}
         <View style={styles.bg}>
-            <View style={styles.elipse142Container}>
-            <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']} color="rgba(97, 206, 255, 0.72)"/>
+            <View style={styles.topGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
             </View>
             
-            <View style={styles.elipse143Container}>
-            <GradientCircle size={216} colors={['rgba(255,255,255,0.1)', 'rgba(255, 255, 255, 1)']} color="#0ebe7e4d"/>
+            <View style={styles.bottomGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
             </View>
         </View>
+        
+        {/* Header */}
+        <HeaderComponent title="Appointment" />
 
         <View style={styles.container}>
             {/* Doctor Card */}
@@ -121,12 +123,10 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 20,
         paddingTop: 36,
-        // alignItems: 'center'
     },
 
     container:{
         alignItems: 'center',
-        // flexDirection: 'column'
     },
 
     bg: {
@@ -140,21 +140,16 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     
-    elipse142Container:{
+    topGradientCircleContainer: {
         position: 'absolute',
-        width: 216,
-        height: 216,
         top: -33,
-        left: -102,
-        zIndex: -1
+        left: -88,
     },
 
-    elipse143Container: {
-        width: 216,
-        height: 216,
+    bottomGradientCircleContainer: {
         position: 'absolute',
-        bottom: -82,
-        left: 202,
+        bottom: -92,
+        right: -60,
     },
 
     header: {

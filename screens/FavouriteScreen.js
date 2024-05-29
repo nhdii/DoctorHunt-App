@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native'
 import SearchBar from '../components/searchBar'
 import FavouriteCard from '../components/favouriteCard'
 import FeatureDoctor from '../components/featureDoctor'
+import HeaderComponent from '../components/headerComponent'
+import GradientCircle from '../components/gradientCircle'
 
 export default function FavouriteScreen() {
 
@@ -113,7 +115,18 @@ export default function FavouriteScreen() {
     };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, paddingTop: 36}}>
+        <View style={styles.bg}>
+            <View style={styles.topGradientCircleContainer}>
+                <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>
+            
+            <View style={styles.bottomGradientCircleContainer}>
+                <GradientCircle size={257} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+            </View>
+        </View>
+
+
         <LinearGradient 
             colors={['rgba(14, 190, 126, 1)', 'rgba(7, 217, 173, 1)']} 
             start={{x: 0, y: 0}} 
@@ -129,10 +142,7 @@ export default function FavouriteScreen() {
         <ScrollView>
             {/* Header */}
             <View style={styles.header}>
-                <BackArrowIcon onPress={() => navigation.goBack()} />
-                <TextComponent style={styles.textHeader}>
-                    Favourtie Doctors
-                </TextComponent>
+                <HeaderComponent title="Favourite Doctor" titleColor='rgba(51, 51, 51, 1)' />
             </View>
 
             {/* Search Bar */}
@@ -189,24 +199,12 @@ export default function FavouriteScreen() {
 const styles = StyleSheet.create({
 
     header:{
-        flexDirection: 'row',
-        marginTop: 36,
         marginLeft: 20,
+        flexDirection: 'row',
         alignItems: 'center'
     },
 
-    textHeader:{
-        fontSize: 18,
-        fontWeight: 'bold',
-        lineHeight: 21.33,
-        letterSpacing: -0.3,
-        color: 'rgba(34, 34, 34, 1)',
-        marginLeft: 19,
-    },
-
-    
     searchBar:{
-        marginTop: 36,
         alignItems: 'center'
     },
 
@@ -237,5 +235,28 @@ const styles = StyleSheet.create({
         lineHeight: 21.33,
         letterSpacing: -0.3,
         color: 'rgba(51, 51, 51, 1)'    
+    },
+
+    bg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -33,
+        left: -99,
+    },
+
+    bottomGradientCircleContainer: {
+        position: 'absolute',
+        bottom: -54,
+        right: -70,
     },
 })

@@ -6,6 +6,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import TextComponent from '../components/textComponent';
 import DoctorSelectCard from '../components/doctorSelectCard';
 import HeaderComponent from '../components/headerComponent'; 
+import GradientCircle from '../components/gradientCircle';
 
 export default function SelectTimeScreen() {
 
@@ -79,6 +80,17 @@ export default function SelectTimeScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
+
+            <View style={styles.bg}>
+                <View style={styles.topGradientCircleContainer}>
+                    <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
+                
+                <View style={styles.bottomGradientCircleContainer}>
+                    <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
+            </View>
+
             {/* Header */}
             <HeaderComponent title="Select Time" titleColor="rgba(34, 34, 34, 1)"/>
 
@@ -293,5 +305,29 @@ const styles = StyleSheet.create({
         color: 'rgba(103, 114, 148, 1)',
         textAlign: 'center',
         marginTop: 10,
-    }
+    },
+
+    bg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        zIndex: -1
+    },
+    
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -32,
+        left: -72,
+    },
+
+    bottomGradientCircleContainer: {
+        position: 'absolute',
+        top: 629,
+        left: 228,
+    },
 });
