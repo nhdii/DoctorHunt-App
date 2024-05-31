@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, Alert } from 'react-native';
 import ButtonComponent from '../components/buttonComponent';
 import TextComponent from '../components/textComponent';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const SignUpScreen = () => {
 
@@ -12,11 +14,20 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignUp = () => {
-    // Xử lý logic đăng ký tại đây
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const handleSignUp = async () => {
+    if(name && email && password){
+      try{
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("User signed up successfully:", userCredential.user.uid);
+        navigation.navigate('BottomNav');
+      }catch(err){
+        console.log("got error: ", err.message);
+      }
+    }else {
+      // Hiển thị thông báo nếu thiếu thông tin đăng ký
+      Alert.alert("Error", "Please fill in all fields.");
+    }
+    
   };
 
   return (
@@ -42,14 +53,14 @@ const SignUpScreen = () => {
                 style={styles.input}
                 placeholder="Name"
                 value={name}
-                onChangeText={setName}
+                onChangeText={value=>setName(value)}
             />
 
             <TextInput
                 style={styles.input}
                 placeholder="Email"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={value=> setEmail(value)}
                 keyboardType="email-address"
             />
 
@@ -57,7 +68,7 @@ const SignUpScreen = () => {
                 style={styles.input}
                 placeholder="Password"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={value=> setPassword(value)}
                 secureTextEntry={true}
             />
 

@@ -5,6 +5,8 @@ import TextComponent from '../components/textComponent';
 import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import GradientCircle from '../components/gradientCircle';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -24,8 +26,15 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    navigation.navigate('BottomNav');
+  const handleLogin = async () => {
+    if(email && password){
+      try{
+        await signInWithEmailAndPassword(auth, email, password);
+      }catch(err){
+        console.log("Got err: ", err.message);
+      }
+    }
+    // navigation.navigate('BottomNav');
     console.log('Email:', email);
     console.log('Password:', password);
   };
@@ -187,7 +196,7 @@ const LoginScreen = () => {
           style={styles.emailInput}
           placeholder="Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={value=>setEmail(value)}
           keyboardType="email-address"
         />
 
@@ -196,7 +205,7 @@ const LoginScreen = () => {
             style={styles.passwordInput}
             placeholder="Password"
             value={password}
-            onChangeText={setPassword}
+            onChangeText={value=>setPassword(value)}
             secureTextEntry={!showPassword}
           />
           <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>

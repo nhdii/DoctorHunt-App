@@ -12,13 +12,15 @@ import TestBookingsScreen from '../screens/TestBookingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import SettingScreen from '../screens/SettingScreen';
 import AppStack from '../navigation/AppStack';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => {
     const navigation = useNavigation();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         Alert.alert(
             "Logout",
             "Are you sure you want to logout?",
@@ -28,7 +30,12 @@ const DrawerContent = (props) => {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { 
+                    text: "OK", 
+                    onPress: async () => {
+                        await signOut(auth);
+                        navigation.navigate("Login")
+                    } }
             ]
         );
     };
