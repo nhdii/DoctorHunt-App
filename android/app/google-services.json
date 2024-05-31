@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "519924291897",
+    "project_id": "doctorhunt-database",
+    "storage_bucket": "doctorhunt-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519924291897:android:6fd228b9d71d7fc37330e8",
+        "android_client_info": {
+          "package_name": "com.doctorhunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbpXXi-9OY9YnjW4vHt8CB22dIiN4y9-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
