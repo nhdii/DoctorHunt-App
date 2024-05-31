@@ -3,9 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import AppStack from './AppStack';
-import { ChevronRightIcon } from 'react-native-heroicons/outline';
-import { ArrowLeftStartOnRectangleIcon } from 'react-native-heroicons/outline';
+import { ChevronRightIcon, ArrowLeftStartOnRectangleIcon } from 'react-native-heroicons/outline';
 import MyDoctorScreen from '../screens/MyDoctorScreen';
 import MedicalRecordsScreen from '../screens/MedicalRecordsScreen';
 import MedicineOrdersScreen from '../screens/MedicineOrdersScreen';
@@ -13,10 +11,11 @@ import HelpCenterScreen from '../screens/HelpCenterScreen';
 import TestBookingsScreen from '../screens/TestBookingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import SettingScreen from '../screens/SettingScreen';
+import AppStack from '../navigation/AppStack';
 
 const Drawer = createDrawerNavigator();
 
-const DrawerContent = (props) => { 
+const DrawerContent = (props) => {
     const navigation = useNavigation();
 
     const handleLogout = () => {
@@ -40,7 +39,7 @@ const DrawerContent = (props) => {
             style={{ flex: 1 }}
         >
             <View style={styles.profileContainer}>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Profile')}} style={styles.profile}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Profile') }} style={styles.profile}>
                     <Image source={require('../assets/images/Ellipse26.png')} style={styles.avatar} />
                     <View style={styles.profileTextContainer}>
                         <Text style={styles.profileName}>User Name</Text>
@@ -54,25 +53,25 @@ const DrawerContent = (props) => {
 
             <View style={styles.menuContainer}>
                 {[
-                    { name: 'My Doctor', icon: require('../assets/images/myDoctorIcon.png'), screen: 'MyDoctor'},
+                    { name: 'My Doctor', icon: require('../assets/images/myDoctorIcon.png'), screen: 'MyDoctor' },
                     { name: 'Medical Records', icon: require('../assets/images/medicalRecordsIcon.png'), screen: 'MedicalRecords' },
-                    { name: 'Payments', icon: require('../assets/images/paymentsIcon.png')},
+                    { name: 'Payments', icon: require('../assets/images/paymentsIcon.png') },
                     { name: 'Medicine Orders', icon: require('../assets/images/medicineOrdersIcon.png'), screen: 'MedicineOrders' },
                     { name: 'Test Bookings', icon: require('../assets/images/testBookingsIcon.png'), screen: 'TestBookings' },
                     { name: 'Privacy & Policy', icon: require('../assets/images/privacyPolicyIcon.png'), screen: 'PrivacyPolicy' },
                     { name: 'Help Center', icon: require('../assets/images/helpCenterIcon.png'), screen: 'HelpCenter' },
                     { name: 'Setting', icon: require('../assets/images/settingIcon.png'), screen: 'Setting' },
                 ].map((item, index) => (
-                    <TouchableOpacity onPress={()=>{ navigation.navigate(item.screen)}} key={index} style={styles.menuItem}>
+                    <TouchableOpacity onPress={() => { navigation.navigate(item.screen) }} key={index} style={styles.menuItem}>
                         <Image source={item.icon} style={styles.menuIcon} />
                         <Text style={styles.menuText}>{item.name}</Text>
-                        <ChevronRightIcon size={24} color="white"/>
+                        <ChevronRightIcon size={24} color="white" />
                     </TouchableOpacity>
                 ))}
             </View>
 
             <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-                <ArrowLeftStartOnRectangleIcon size={24} color="rgba(255, 255, 255, 1)"/>
+                <ArrowLeftStartOnRectangleIcon size={24} color="rgba(255, 255, 255, 1)" />
                 <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
         </LinearGradient>
@@ -87,13 +86,13 @@ const DrawerNavigation = () => {
                 screenOptions={{ headerShown: false }}
             >
                 <Drawer.Screen name="HomeDrawer" component={AppStack} />
-                <Drawer.Screen name="MyDoctor" component={MyDoctorScreen} /> 
-                <Drawer.Screen name="MedicalRecords" component={MedicalRecordsScreen} /> 
-                <Drawer.Screen name="MedicineOrders" component={MedicineOrdersScreen} /> 
-                <Drawer.Screen name="HelpCenter" component={HelpCenterScreen}/>
+                <Drawer.Screen name="MyDoctor" component={MyDoctorScreen} />
+                <Drawer.Screen name="MedicalRecords" component={MedicalRecordsScreen} />
+                <Drawer.Screen name="MedicineOrders" component={MedicineOrdersScreen} />
+                <Drawer.Screen name="HelpCenter" component={HelpCenterScreen} />
                 <Drawer.Screen name="TestBookings" component={TestBookingsScreen} />
-                <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen}/>
-                <Drawer.Screen name="Setting" component={SettingScreen}/>
+                <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+                <Drawer.Screen name="Setting" component={SettingScreen} />
             </Drawer.Navigator>
         </NavigationContainer>
     );
@@ -109,10 +108,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    profile:{
+    profile: {
         flexDirection: 'row',
     },
-    
+
     avatar: {
         width: 44,
         height: 44,
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 14,
     },
-    
+
     closeButton: {
         marginLeft: 60,
     },
