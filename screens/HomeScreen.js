@@ -8,6 +8,7 @@ import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
 import SearchBar from '../components/searchBar'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
+import useFirestoreCollection from '../hooks/useFirestoreCollection'
 
 var {width, height} = Dimensions.get('window')
 
@@ -22,22 +23,25 @@ export default function HomeScreen() {
     const eyeIcon = require('../assets/images/eye.png'); 
     const bodyIcon = require('../assets/images/body.png'); 
 
-    const doctorData = [
-        {
-            image: require('../assets/images/doctor1.png'),
-            name: 'Dr. Fillerup Grab',
-            role: 'Medicine Specialist',
-            rating: 4, // Example rating
-        },
+    // const doctorData = [
+    //     {
+    //         image: require('../assets/images/doctor1.png'),
+    //         name: 'Dr. Fillerup Grab',
+    //         role: 'Medicine Specialist',
+    //         rating: 4, // Example rating
+    //     },
 
-        {
-            image: require('../assets/images/doctor2.png'),
-            name: 'Dr. Blessing',
-            role: 'Dentist Specialist',
-            rating: 4, // Example rating
-        },
-        // Add more doctor data here
-    ];
+    //     {
+    //         image: require('../assets/images/doctor2.png'),
+    //         name: 'Dr. Blessing',
+    //         role: 'Dentist Specialist',
+    //         rating: 4, // Example rating
+    //     },
+    //     // Add more doctor data here
+    // ];
+
+    // Sử dụng custom hook để lấy dữ liệu từ Firestore
+    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
 
     const featureDoctor = [
         {
@@ -78,6 +82,17 @@ export default function HomeScreen() {
     const handleSubmitSearch = (text) => {
         navigation.navigate('Search', { query: text });
     };
+
+    if (doctorsLoading) {
+        return (
+          <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Loading...</Text>
+          </SafeAreaView>
+        );
+    }
+
+    const popularDoctors = doctors.filter(doctor => doctor.popular);
+    const featureDoctors = doctors.filter(doctor => doctor.feature);
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -175,7 +190,7 @@ export default function HomeScreen() {
                 </View>
 
                 {/* popular Doctor */}
-                <View style={styles.popularDoctor}>
+                {/* <View style={styles.popularDoctor}>
                     <View style={styles.headline}>
                         <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
 
@@ -199,10 +214,32 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
+                </View> */}
+
+                <View style={styles.popularDoctor}>
+                    <View style={styles.headline}>
+                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
+                        <TouchableOpacity onPress={() => { navigation.navigate('PopularDoctor') }}>
+                            <TextComponent fontSize={18} style={{ paddingRight: 22 }}>See all </TextComponent>
+                        </TouchableOpacity>
+                    </View>
+
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        {popularDoctors.map((doctor, index) => (
+                        <TouchableOpacity key={index} onPress={() => { }}>
+                            <PopularDoctor
+                                image={{ uri: doctor.image_url }}
+                                name={doctor.name}
+                                role={doctor.specialty}
+                                rating={doctor.rating}
+                            />
+                        </TouchableOpacity>
+                        ))}
+                    </ScrollView>
                 </View>
 
                 {/* feature Doctor */}
-                <View style={styles.featureDoctor}>
+                {/* <View style={styles.featureDoctor}>
                     <View style={styles.headline}>
                         <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
 
@@ -224,6 +261,27 @@ export default function HomeScreen() {
                                     rating={doctor.rating}
                                 />
                             </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View> */}
+
+                <View style={styles.featureDoctor}>
+                    <View style={styles.headline}>
+                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
+                        <TouchableOpacity>
+                            <TextComponent fontSize={14} color='rgba(103, 114, 148, 1)' style={{ paddingRight: 16 }}>See all </TextComponent>
+                        </TouchableOpacity>
+                    </View>
+
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        {featureDoctors.map((doctor, index) => (
+                        <TouchableOpacity key={index} onPress={() => { }}>
+                            <FeatureDoctor
+                                image={{ uri: doctor.image_url }}
+                                name={doctor.name}
+                                rating={doctor.rating}
+                            />
+                        </TouchableOpacity>
                         ))}
                     </ScrollView>
                 </View>
