@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, Alert } from 'react-native';
 import ButtonComponent from '../components/buttonComponent';
 import TextComponent from '../components/textComponent';
 import { useNavigation } from '@react-navigation/native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, firestore } from '../config/firebase';
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/solid';
+import bcrypt from 'react-native-bcrypt';
 
 const SignUpScreen = () => {
 
@@ -13,21 +16,71 @@ const SignUpScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  
+  useEffect(() => {
+    // Set secure PRNG for bcrypt
+    bcrypt.setRandomFallback((len) => {
+      const buf = new Uint8Array(len);
+      return buf.map(() => Math.floor(Math.random() * 256));
+    });
+  }, []);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSignUp = async () => {
-    if(name && email && password){
-      try{
+    if (name && email && password) {
+      try {
+        // Check if the email already exists
+        const usersRef = collection(firestore, 'users');
+        const q = query(usersRef, where('email', '==', email));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          Alert.alert("Error", "Email already in use.");
+          return;
+        }
+
+        // Hash the password
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("User signed up successfully:", userCredential.user.uid);
-        navigation.navigate('BottomNav');
-      }catch(err){
+        const user = userCredential.user;
+
+        if (user) {
+          // Cập nhật displayName vào Authentication
+          await updateProfile(user, { displayName: name });
+
+        }
+
+        console.log("User signed up successfully:", user.uid);
+        
+        Alert.alert("Sign Up successful!");
+
+        // Save user to Firestore
+        await setDoc(doc(firestore, 'users', user.uid), {
+          uid: user.uid,
+          name: name,
+          email: email,
+          password: hashedPassword,
+          contactNumber: '',
+          dob: '',
+          location:'',
+          photoUrl: '',
+          createAt: new Date().toISOString()
+        });
+
+      } catch (err) {
         console.log("got error: ", err.message);
+        Alert.alert("Error", err.message);
       }
-    }else {
-      // Hiển thị thông báo nếu thiếu thông tin đăng ký
+    } else {
+      // Show alert if missing registration information
       Alert.alert("Error", "Please fill in all fields.");
     }
-    
   };
 
   return (
@@ -64,13 +117,18 @@ const SignUpScreen = () => {
                 keyboardType="email-address"
             />
 
-            <TextInput
-                style={styles.input}
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={styles.passwordInput}
                 placeholder="Password"
                 value={password}
-                onChangeText={value=> setPassword(value)}
-                secureTextEntry={true}
-            />
+                onChangeText={value=>setPassword(value)}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                {showPassword ? <EyeIcon size="22" color="gray" /> : <EyeSlashIcon size="22" color="gray" />}
+              </TouchableOpacity>
+            </View>
 
             <TouchableOpacity style={styles.checkboxContainer}>
 
@@ -158,6 +216,27 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 25,
     marginTop: 18,
+  },
+
+  passwordInput: {
+    width: 335,
+    height: 54,
+    borderColor: 'rgba(103, 114, 148, 0.16)',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 25,
+    marginTop: 18,
+  },
+
+  eyeIcon: {
+    position: 'absolute',
+    marginLeft: 295,
+    paddingTop: 20,
+  },
+
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   checkboxContainer: {

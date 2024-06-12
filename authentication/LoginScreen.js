@@ -7,11 +7,17 @@ import { useNavigation } from '@react-navigation/native';
 import GradientCircle from '../components/gradientCircle';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+
+// GoogleSignin.configure({
+
+// })
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [resetModalVisible, setResetModalVisible] = useState(false); // State for Reset Password modal
   const [modalEmail, setModalEmail] = useState('');
@@ -26,17 +32,39 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleLogin = async () => {
-    if(email && password){
-      try{
-        await signInWithEmailAndPassword(auth, email, password);
-      }catch(err){
-        console.log("Got err: ", err.message);
-      }
-    }
-    // navigation.navigate('BottomNav');
-    console.log('Email:', email);
-    console.log('Password:', password);
+  // const handleLoginWithGoogle = async () =>{
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn;
+  //     this.setState({userInfo});
+
+  //   }catch(err){
+  //     if(err.code === statusCodes.SIGN_IN_CANCELLED ){
+  //       //user cancelled the login flow
+  //     }else if(err.code ===statusCodes.IN_PROGRESS){
+  //       // operation (e.g sign in) is in progress already
+  //     }else if(err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE){
+  //       // play service not available or outdates
+  //     }else{
+  //       // some other err happen
+  //     }
+  //   }
+  // }
+
+  const handleLogin = async() => {
+    if (email && password) {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const userUid = userCredential.user.uid;
+            await fetchUserData(userUid);
+        } catch (err) {
+            if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+                setError('Invalid email or password');
+            }
+        }
+    }else{
+        setError('Please fill in all fields');
+    } 
   };
 
   const togglePasswordVisibility = () => {
@@ -212,6 +240,9 @@ const LoginScreen = () => {
             {showPassword ? <EyeIcon size="22" color="gray" /> : <EyeSlashIcon size="22" color="gray" />}
           </TouchableOpacity>
         </View>
+
+        {/* error message */}
+        <Text style={{color: "red", textAlign: "center"}}>{error}</Text>
 
         <View style={{ marginTop: 32 }}>
           <ButtonComponent
