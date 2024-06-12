@@ -14,11 +14,13 @@ import SettingScreen from '../screens/SettingScreen';
 import AppStack from '../navigation/AppStack';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import useAuth from '../hooks/useAuth';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = (props) => {
-    const navigation = useNavigation();
+    const {navigation} = props;
+    const {user} = useAuth();
 
     const handleLogout = async () => {
         Alert.alert(
@@ -35,7 +37,8 @@ const DrawerContent = (props) => {
                     onPress: async () => {
                         await signOut(auth);
                         navigation.navigate("Login")
-                    } }
+                    } 
+                }
             ]
         );
     };
@@ -49,8 +52,8 @@ const DrawerContent = (props) => {
                 <TouchableOpacity onPress={() => { navigation.navigate('Profile') }} style={styles.profile}>
                     <Image source={require('../assets/images/Ellipse26.png')} style={styles.avatar} />
                     <View style={styles.profileTextContainer}>
-                        <Text style={styles.profileName}>User Name</Text>
-                        <Text style={styles.profilePhone}>+123456789</Text>
+                        <Text style={styles.profileName}>{user?.displayName || "user Name"}</Text>
+                        <Text style={styles.profilePhone}>{user?.phoneNumber}</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.closeButton} onPress={() => props.navigation.closeDrawer()}>
@@ -86,10 +89,11 @@ const DrawerContent = (props) => {
 };
 
 const DrawerNavigation = () => {
+
     return (
         <NavigationContainer>
             <Drawer.Navigator
-                drawerContent={(props) => <DrawerContent {...props} />}
+                drawerContent={(props) => <DrawerContent {...props}/>}
                 screenOptions={{ headerShown: false }}
             >
                 <Drawer.Screen name="HomeDrawer" component={AppStack} />
@@ -107,12 +111,12 @@ const DrawerNavigation = () => {
 
 const styles = StyleSheet.create({
     profileContainer: {
-        width: 335,
         height: 44,
         marginTop: 46,
-        marginLeft: 20,
+        marginHorizontal: 20,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between'
     },
 
     profile: {

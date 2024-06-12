@@ -1,11 +1,30 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import HeaderComponent from '../components/headerComponent'
 import TextComponent from '../components/textComponent'
 import ButtonComponent from '../components/buttonComponent';
+import { auth, firestore } from '../config/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function EditProfile() {
-  const [name, setName] = useState('Abdullah Mamun');
+  const [name, setName] = useState();
+  const user = auth.currentUser; // Get the current authenticated user
+
+  const handleSave = async () => {
+    if (user) {
+        try {
+            const userDocRef = doc(firestore, 'users', user.uid);
+            const userProfile = { name: name || '' }; // Ensure non-undefined values
+            await setDoc(userDocRef, userProfile, { merge: true });
+            Alert.alert('Success', 'Profile updated successfully');
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            Alert.alert('Error', 'Failed to update profile');
+        }
+    } else {
+        Alert.alert('Error', 'No user logged in');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -26,7 +45,7 @@ export default function EditProfile() {
       <View style={styles.button}>
         <ButtonComponent
             title="Continue"
-            onPress={()=>{}}
+            onPress={handleSave}
             width={295}
             height={54}
             borderRadius={6}

@@ -1,23 +1,54 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar, Alert } from 'react-native';
 import HeaderComponent from '../components/headerComponent';
 import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent';
 import { CameraIcon, PencilIcon } from 'react-native-heroicons/solid';
 import ButtonComponent from '../components/buttonComponent';
 import { useNavigation } from '@react-navigation/native';
+import useAuth from '../hooks/useAuth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../config/firebase';
 
 const ProfileScreen = () => {
 
     const navigation = useNavigation();
-    const [name, setName] = useState('Abdullah Mamun');
-    const [contactNumber, setContactNumber] = useState('+8801800000000');
+    const {user, updateUserProfile}  = useAuth();
+    const [name, setName] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
     const [dob, setDob] = useState('');
     const [location, setLocation] = useState('');
 
-    const handleContinue = () => {
-        // Handle the continue action
-    };
+    const handleContinue = async () => {
+      if (user) {
+          const updatedUserData = {
+              name,
+              contactNumber,
+              dob,
+              location,
+              // Cập nhật thông tin khác nếu có
+          };
+
+          const userDocRef = doc(firestore, 'users', user.uid);
+          try {
+            const docSnapshot = await getDoc(userDocRef);
+
+            if (docSnapshot.exists()) {
+                await setDoc(userDocRef, updatedUserData, { merge: true });
+            } else {
+                await setDoc(userDocRef, updatedUserData);
+            }
+
+            console.log('User profile updated');
+            navigation.navigate('EditProfile');
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            Alert.alert('Error', 'Failed to update profile');
+        }
+      } else {
+          Alert.alert('Error', 'No user logged in');
+      }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,8 +90,8 @@ const ProfileScreen = () => {
                     <TextComponent style={styles.inputTitle}>Name</TextComponent>
                     <TextInput
                         style={styles.input}
-                        placeholder="Abdullah Mamun"
-                        value={name}
+                        // placeholder="Abdullah Mamun"
+                        value={user?.displayName}
                         onChangeText={setName}
                     />
                 </View>
@@ -116,7 +147,7 @@ const ProfileScreen = () => {
             <View style={styles.button}>
                 <ButtonComponent
                     title="Continue"
-                    onPress={()=>{navigation.navigate('EditProfile')}}
+                    onPress={handleContinue}
                     width={295}
                     height={54}
                     borderRadius={6}
