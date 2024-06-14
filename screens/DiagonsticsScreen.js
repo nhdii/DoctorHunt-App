@@ -19,7 +19,7 @@ const DiagnosticsTestsScreen = () => {
   return (
     <ScrollView style={styles.container}>
       
-        <HeaderComponent title="Diagonstics Tests"/>
+        <HeaderComponent title="Diagonstics Tests" titleColor='rgba(51, 51, 51, 1)'/>
 
         <TextComponent style={styles.title}>Get Full body health checkups from the comfort of your home.</TextComponent>
         
