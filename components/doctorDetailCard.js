@@ -19,13 +19,14 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
 
     const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
 
+// { uri: doctor?.image_url }
   return (
     <View style={[styles.container, {height: cardHeight}]}>
 
         {/* Doctor Information */}
         <View style={styles.doctorCard}>
             {/* Image */}
-            <Image source={doctor?.image} style={styles.image} />
+            <Image source={doctor?.image_url} style={styles.image} />
             <View style={styles.doctorInfo}>
                 <View style={styles.doctorNameContainer}>
                     {/* Doctor Name */}
@@ -42,7 +43,7 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
 
                     {/* Cost */}
                     <TextComponent style={styles.cost}>
-                        <Text style={{color: 'rgba(14, 190, 127, 1)'}}>$ </Text>{doctor?.cost}
+                        <Text style={{color: 'rgba(14, 190, 127, 1)'}}>$ </Text>{doctor?.cost}/hr
                     </TextComponent>
                 </View>
             </View>

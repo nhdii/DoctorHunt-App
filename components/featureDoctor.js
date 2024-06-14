@@ -11,7 +11,7 @@ const FeatureDoctor = ({image, name, cost, rating }) => {
                 <Image source={require('../assets/images/favoriteIcon.png')} style={styles.favoriteIcon} />
                 <View style={styles.rating}>
                     <Image source={require('../assets/images/starIcon.png')} style={{width: 9, height: 9}} />
-                    <TextComponent style={styles.ratingText}>{rating}</TextComponent>
+                    <TextComponent fontSize={10} fontWeight='500' lineHeight={11.85} color='rgba(103, 114, 148, 1)' style={{paddingLeft: 6}}>{rating}</TextComponent>
 
                 </View>
             </View>
@@ -21,9 +21,9 @@ const FeatureDoctor = ({image, name, cost, rating }) => {
 
             {/* Group chứa tên doctor và chi phí */}
             <View style={styles.details}>
-                <TextComponent style={styles.name}>{name}</TextComponent>
-                <TextComponent style={styles.cost}>
-                    <Text style={{color: 'rgba(14, 190, 126, 1)'}}>$</Text> {cost}
+                <TextComponent fontSize={12} fontWeight='500' lineHeight={14.22} color='rgba(51, 51, 51, 1)' style={{paddingTop: 4}}>{name}</TextComponent>
+                <TextComponent fontSize={10} fontWeight="300" lineHeight={10.67} color='rgba(51, 51, 51, 1)' style={{paddingTop: 3}}>
+                    <Text style={{color: 'rgba(14, 190, 126, 1)'}}>$</Text> {cost}/hours
                 </TextComponent>
             </View>
         </View>
@@ -61,16 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 12,
     },
-
-    ratingText:{
-        fontSize: 10,
-        fontWeight: '500', 
-        lineHeight: 11.85,
-        letterSpacing: -0.3,
-        paddingLeft: 6,
-        color: 'rgba(103, 114, 148, 1)'
-    },      
-
+    
     image: {
         width: 54,
         height: 54,
@@ -81,24 +72,6 @@ const styles = StyleSheet.create({
     details: {
         alignItems: 'center',
         marginTop: 8, // Khoảng cách giữa avatar và group details
-    },
-
-    name: {
-        paddingTop: 4,
-        fontSize: 12,
-        fontWeight: '500',
-        lineHeight: 14.22,
-        letterSpacing: -0.3,
-        color: 'rgba(51, 51, 51, 1)',
-    },
-      
-    cost: {
-        paddingTop: 3,
-        fontSize: 9,
-        fontWeight: '300',
-        lineHeight: 10.67,
-        letterSpacing: -0.3,
-        color: 'rgba(51, 51, 51, 1)',
     },
 });
 

@@ -9,19 +9,33 @@ import FavouriteCard from '../components/favouriteCard'
 import FeatureDoctor from '../components/featureDoctor'
 import HeaderComponent from '../components/headerComponent'
 import GradientCircle from '../components/gradientCircle'
+import useFirestoreCollection from '../hooks/useFirestoreCollection'
 
 export default function FavouriteScreen() {
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
 
+    if (doctorsLoading) {
+        return (
+          <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Loading...</Text>
+          </SafeAreaView>
+        );
+    }
+
+    // Sử dụng custom hook để lấy dữ liệu từ Firestore
+    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
+
+    const featureDoctors = doctors.filter(doctor => doctor.feature);
+
     const favoriteDoctors = [
         { 
             id: 1, 
             name: 'Dr. Shouey', 
             specialist: 'Cardiology', 
-            image: require('../assets/images/doctor1.png'),
-            cost: '25.00/hours',
+            image_url: require('../assets/images/doctor1.png'),
+            cost: '25.00',
             rating: 4,
             services: [
                 { number: 1, description: 'Service 1 for Dr. Shouey' },
@@ -34,8 +48,8 @@ export default function FavouriteScreen() {
             id: 2, 
             name: 'Dr. Christenfeld N', 
             specialist: 'Cancer', 
-            image: require('../assets/images/doctor2.png'),
-            cost: '25.00/hours',
+            image_url: require('../assets/images/doctor2.png'),
+            cost: '25.00',
             rating: 4,
             services: [
                 { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
@@ -48,8 +62,8 @@ export default function FavouriteScreen() {
             id: 3, 
             name: 'Dr. Shouey', 
             specialist: 'Cardiology', 
-            image: require('../assets/images/doctor1.png'),
-            cost: '25.00/hours',
+            image_url: require('../assets/images/doctor1.png'),
+            cost: '25.00',
             rating: 4, 
             services: [
                 { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
@@ -62,8 +76,8 @@ export default function FavouriteScreen() {
             id: 4, 
             name: 'Dr. Christenfeld N', 
             specialist: 'Cancer', 
-            image: require('../assets/images/doctor2.png'),
-            cost: '25.00/hours',
+            image_url: require('../assets/images/doctor2.png'),
+            cost: '25.00',
             rating: 4,
             services: [
                 { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
@@ -72,36 +86,6 @@ export default function FavouriteScreen() {
             ]
         },
         
-    ];
-
-    const featureDoctor = [
-        {
-            image: require('../assets/images/feature1.png'),
-            name: 'Dr. Crick',
-            cost: '25.00/hours',
-            rating: 4, // Example rating
-        },
-
-        {
-            image: require('../assets/images/feature2.png'),
-            name: 'Dr. Strain',
-            cost: '22.00/hours',
-            rating: '3.7', // Example rating
-        },
-        
-        {
-            image: require('../assets/images/feature3.png'),
-            name: 'Dr. Lachinet',
-            cost: '29.00/hours',
-            rating: '3.0', // Example rating
-        },
-
-        {
-            image: require('../assets/images/feature1.png'),
-            name: 'Dr. Lachinet',
-            cost: '29.00/hours',
-            rating: '2.9', // Example rating
-        },
     ];
 
     const handleSearch = (text) => {
@@ -168,26 +152,22 @@ export default function FavouriteScreen() {
             {/* feature Doctor */}
             <View style={styles.featureDoctor}>
                 <View style={styles.headline}>
-                    <TextComponent style={styles.title}>Feature Doctor</TextComponent>
-
-                    <TouchableOpacity>
-                        <Text style={{fontSize: 14, paddingRight: 16, color: 'rgba(103, 114, 148, 1)'  }}>See all </Text>
+                    <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
+                    <TouchableOpacity onPress={() => { navigation.navigate('PopularDoctor') }}>
+                        <TextComponent fontSize={14} color='rgba(103, 114, 148, 1)' style={{ paddingRight: 16 }}>See all </TextComponent>
                     </TouchableOpacity>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {featureDoctor.map((doctor, index) => (
-                        <TouchableOpacity 
-                            key={index}
-                            onPress={()=> {}}
-                        >
-                            <FeatureDoctor
-                                image={doctor.image}
-                                name={doctor.name}
-                                cost={doctor.cost}
-                                rating={doctor.rating}
-                            />
-                        </TouchableOpacity>
+                    {featureDoctors.map((doctor, index) => (
+                    <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', {doctor: doctor})}}>
+                        <FeatureDoctor
+                            image={{ uri: doctor.image_url }}
+                            name={doctor.name}
+                            cost={doctor.cost}
+                            rating={doctor.rating}
+                        />
+                    </TouchableOpacity>
                     ))}
                 </ScrollView>
             </View>

@@ -23,56 +23,6 @@ export default function HomeScreen() {
     const eyeIcon = require('../assets/images/eye.png'); 
     const bodyIcon = require('../assets/images/body.png'); 
 
-    // const doctorData = [
-    //     {
-    //         image: require('../assets/images/doctor1.png'),
-    //         name: 'Dr. Fillerup Grab',
-    //         role: 'Medicine Specialist',
-    //         rating: 4, // Example rating
-    //     },
-
-    //     {
-    //         image: require('../assets/images/doctor2.png'),
-    //         name: 'Dr. Blessing',
-    //         role: 'Dentist Specialist',
-    //         rating: 4, // Example rating
-    //     },
-    //     // Add more doctor data here
-    // ];
-
-    // Sử dụng custom hook để lấy dữ liệu từ Firestore
-    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
-
-    const featureDoctor = [
-        {
-            image: require('../assets/images/feature1.png'),
-            name: 'Dr. Crick',
-            cost: '25.00/hours',
-            rating: 4, // Example rating
-        },
-
-        {
-            image: require('../assets/images/feature2.png'),
-            name: 'Dr. Strain',
-            cost: '22.00/hours',
-            rating: '3.7', // Example rating
-        },
-        
-        {
-            image: require('../assets/images/feature3.png'),
-            name: 'Dr. Lachinet',
-            cost: '29.00/hours',
-            rating: '3.0', // Example rating
-        },
-
-        {
-            image: require('../assets/images/feature1.png'),
-            name: 'Dr. Lachinet',
-            cost: '29.00/hours',
-            rating: '2.9', // Example rating
-        },
-    ];
-
     const handleSearch = (text) => {
         // Xử lý tìm kiếm ở đây
         setSearchText(text);
@@ -90,6 +40,9 @@ export default function HomeScreen() {
           </SafeAreaView>
         );
     }
+
+    // Sử dụng custom hook để lấy dữ liệu từ Firestore
+    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
 
     const popularDoctors = doctors.filter(doctor => doctor.popular);
     const featureDoctors = doctors.filter(doctor => doctor.feature);
@@ -189,33 +142,6 @@ export default function HomeScreen() {
                     </ScrollView>
                 </View>
 
-                {/* popular Doctor */}
-                {/* <View style={styles.popularDoctor}>
-                    <View style={styles.headline}>
-                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
-
-                        <TouchableOpacity onPress={()=>{navigation.navigate('PopularDoctor')}}>
-                            <TextComponent fontSize={18} style={{paddingRight: 22}}>See all </TextComponent>
-                        </TouchableOpacity>
-                    </View>
-
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {doctorData.map((doctor, index) => (
-                            <TouchableOpacity 
-                                key={index}
-                                onPress={()=> {}}
-                            >
-                                <PopularDoctor
-                                    image={doctor.image}
-                                    name={doctor.name}
-                                    role={doctor.role}
-                                    rating={doctor.rating}
-                                />
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View> */}
-
                 <View style={styles.popularDoctor}>
                     <View style={styles.headline}>
                         <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Popular Doctor</TextComponent>
@@ -226,7 +152,7 @@ export default function HomeScreen() {
 
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         {popularDoctors.map((doctor, index) => (
-                        <TouchableOpacity key={index} onPress={() => { }}>
+                        <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', { doctor: doctor }) }}>
                             <PopularDoctor
                                 image={{ uri: doctor.image_url }}
                                 name={doctor.name}
@@ -238,33 +164,6 @@ export default function HomeScreen() {
                     </ScrollView>
                 </View>
 
-                {/* feature Doctor */}
-                {/* <View style={styles.featureDoctor}>
-                    <View style={styles.headline}>
-                        <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
-
-                        <TouchableOpacity>
-                            <TextComponent fontSize={14} color='rgba(103, 114, 148, 1)' style={{ paddingRight: 16}}>See all </TextComponent>
-                        </TouchableOpacity>
-                    </View>
-
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {featureDoctor.map((doctor, index) => (
-                            <TouchableOpacity 
-                                key={index}
-                                onPress={()=> {}}
-                            >
-                                <FeatureDoctor
-                                    image={doctor.image}
-                                    name={doctor.name}
-                                    cost={doctor.cost}
-                                    rating={doctor.rating}
-                                />
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View> */}
-
                 <View style={styles.featureDoctor}>
                     <View style={styles.headline}>
                         <TextComponent fontSize={18} fontWeight='bold' lineHeight={21.33} color='rgba(51, 51, 51, 1)'>Feature Doctor</TextComponent>
@@ -275,10 +174,11 @@ export default function HomeScreen() {
 
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         {featureDoctors.map((doctor, index) => (
-                        <TouchableOpacity key={index} onPress={() => { }}>
+                        <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', {doctor: doctor})}}>
                             <FeatureDoctor
                                 image={{ uri: doctor.image_url }}
                                 name={doctor.name}
+                                cost={doctor.cost}
                                 rating={doctor.rating}
                             />
                         </TouchableOpacity>

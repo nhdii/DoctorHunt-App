@@ -22,7 +22,7 @@ const FavouriteCard = ({ doctor }) => {
                 <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"} />
             </TouchableOpacity>
             <View style={styles.imageContainer}>
-                <Image source={doctor.image} style={styles.image} />
+                <Image source={doctor.image_url} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
                 <TextComponent style={styles.doctorName}>{doctor.name}</TextComponent>

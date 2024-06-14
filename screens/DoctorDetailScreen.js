@@ -9,7 +9,7 @@ import GradientCircle from '../components/gradientCircle';
 
 export default function DoctorDetailScreen({ route }) {
   const navigation = useNavigation();
-  const { doctor, services  } = route.params;
+  const { doctor, services = []  } = route.params;
 
   const statisticsData = [
     { number: 100, label: 'Running' },
