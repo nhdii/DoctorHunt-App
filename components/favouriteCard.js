@@ -3,22 +3,30 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { HeartIcon as OutlineHeartIcon } from 'react-native-heroicons/outline'
 import { HeartIcon as SolidHeartIcon } from 'react-native-heroicons/solid'
 import TextComponent from './textComponent';
+import useAuth from '../hooks/useAuth';
 
 const FavouriteCard = ({ doctor }) => {
 
-    const [isFavourite, toggleFavourite] = useState(false);
-    const [isSolid, setIsSolid] = useState(false);
+    const { user, updateFavorites } = useAuth();
 
-    const handleToggleIcon = () => {
-        toggleFavourite(!isFavourite);
-        setIsSolid(!isSolid);
+    const [isFavourite, setIsFavourite] = useState(user?.favorites?.includes(doctor.id));
+    const [isSolid, setIsSolid] = useState(user?.favorites?.includes(doctor.id));
+
+    const handleToggleFavorite = async () => {
+        const newState = !isFavourite;
+        setIsFavourite(newState);
+        setIsSolid(newState);
+
+        if (user) {
+            await updateFavorites(user.uid, doctor.id, newState);
+        }
     };
 
     const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleToggleIcon} style={styles.heartIconContainer}>
+            <TouchableOpacity onPress={handleToggleFavorite} style={styles.heartIconContainer}>
                 <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"} />
             </TouchableOpacity>
             <View style={styles.imageContainer}>

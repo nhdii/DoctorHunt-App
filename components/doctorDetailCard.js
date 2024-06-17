@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { HeartIcon as OutlineHeartIcon } from 'react-native-heroicons/outline'
 import { HeartIcon as SolidHeartIcon } from 'react-native-heroicons/solid'
 import TextComponent from './textComponent';
 import { useNavigation } from '@react-navigation/native';
 import ButtonComponent from './buttonComponent';
+import useAuth from '../hooks/useAuth';
 
 export default function DoctorDetailCard({ doctor, showBookNowButton = true, cardHeight = 170}) {
 
+  
     const navigation = useNavigation();
-    const [isFavourite, toggleFavourite] = useState(false);
-    const [isSolid, setIsSolid] = useState(false);
+    const { user, updateFavorites } = useAuth();
 
-    const handleToggleIcon = () => {
-        toggleFavourite(!isFavourite);
-        setIsSolid(!isSolid);
+    const [isFavourite, setIsFavourite] = useState(user?.favorites?.includes(doctor.id));
+    const [isSolid, setIsSolid] = useState(user?.favorites?.includes(doctor.id));
+
+    useEffect(() => {
+      if (user) {
+          setIsFavourite(user.favorites.includes(doctor.id));
+      }
+    }, [user, doctor.id]);
+
+    const handleToggleFavorite = async () => {
+        const newState = !isFavourite;
+        setIsFavourite(newState);
+        setIsSolid(newState);
+
+        if (user) {
+            await updateFavorites(user.uid, doctor.id, newState);
+        }
     };
 
     const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
@@ -32,7 +47,7 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
                     {/* Doctor Name */}
                     <TextComponent style={styles.doctorName}>{doctor?.name}</TextComponent>
                     {/* <HeartIcon style={styles.heartIcon} color='gray' /> */}
-                    <TouchableOpacity onPress={handleToggleIcon} style={styles.heartIcon}>
+                    <TouchableOpacity onPress={handleToggleFavorite} style={styles.heartIcon}>
                         <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"} />
                     </TouchableOpacity>
                 </View>

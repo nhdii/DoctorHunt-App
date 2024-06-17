@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, firestore } from '../config/firebase';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export default function useAuth() {
     const [user, setUser] = useState(null);
@@ -45,5 +45,25 @@ export default function useAuth() {
         }
     };
 
-    return { user, updateUserProfile };
+    const updateFavorites = async (uid, doctorId, add = true) => {
+        try {
+            const userRef = doc(firestore, 'users', uid);
+            if (add) {
+                await updateDoc(userRef, {
+                    favorites: arrayUnion(doctorId),
+                });
+                console.log(doctorId);
+
+            } else {
+                await updateDoc(userRef, {
+                    favorites: arrayRemove(doctorId)
+                });
+            }
+            console.log('Favorites updated successfully');
+        } catch (error) {
+            console.error('Error updating favorites:', error);
+        }
+    };
+
+    return { user, updateUserProfile, updateFavorites  };
 }
