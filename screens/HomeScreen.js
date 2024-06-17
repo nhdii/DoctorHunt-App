@@ -33,19 +33,34 @@ export default function HomeScreen() {
         navigation.navigate('Search', { query: text });
     };
 
-    if (doctorsLoading) {
+    // Fetch categories
+    const { data: categories, loading: categoriesLoading } = useFirestoreCollection('categories');
+    // Fetch doctors
+    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
+    // Fetch specialties
+    const { data: specialties, loading: specialtiesLoading } = useFirestoreCollection('specialties');
+
+    if (categoriesLoading || doctorsLoading || specialtiesLoading) {
         return (
-          <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Loading...</Text>
-          </SafeAreaView>
+            <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text>Loading...</Text>
+            </SafeAreaView>
         );
     }
 
-    // Sử dụng custom hook để lấy dữ liệu từ Firestore
-    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
+    // Find popular and feature categories
+    const popularCategory = categories.find(category => category.name === 'Popular');
+    const featureCategory = categories.find(category => category.name === 'Feature');
 
-    const popularDoctors = doctors.filter(doctor => doctor.popular);
-    const featureDoctors = doctors.filter(doctor => doctor.feature);
+    // Filter doctors based on categoryId
+    const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
+    const featureDoctors = featureCategory ? doctors.filter(doctor => doctor.category === featureCategory.id) : [];
+
+    const getSpecialtyName = (specialtyId) => {
+        const specialty = specialties.find(spec => spec.id === specialtyId);
+        return specialty ? specialty.name : 'Unknown Specialty';
+    };
+
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -156,7 +171,7 @@ export default function HomeScreen() {
                             <PopularDoctor
                                 image={{ uri: doctor.image_url }}
                                 name={doctor.name}
-                                role={doctor.specialty}
+                                role={getSpecialtyName(doctor.specialty)}
                                 rating={doctor.rating}
                             />
                         </TouchableOpacity>
