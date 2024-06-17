@@ -31,7 +31,10 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
                 <View style={styles.doctorNameContainer}>
                     {/* Doctor Name */}
                     <TextComponent style={styles.doctorName}>{doctor?.name}</TextComponent>
-                    <HeartIcon style={styles.heartIcon} color='gray' />
+                    {/* <HeartIcon style={styles.heartIcon} color='gray' /> */}
+                    <TouchableOpacity onPress={handleToggleIcon} style={styles.heartIcon}>
+                        <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* Specialist */}
