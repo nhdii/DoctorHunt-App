@@ -53,7 +53,7 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
                 </View>
 
                 {/* Specialist */}
-                <TextComponent style={styles.specialist}>Specialist {doctor?.specialist}</TextComponent>
+                <TextComponent style={styles.specialist}>{doctor?.specialist}</TextComponent>
 
                 <View style={styles.footerInfo}>
                     {/* Rating */}

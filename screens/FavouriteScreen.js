@@ -1,102 +1,80 @@
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent'
-import BackArrowIcon from '../assets/icon/backArrowIcon'
 import { useNavigation } from '@react-navigation/native'
 import SearchBar from '../components/searchBar'
 import FavouriteCard from '../components/favouriteCard'
 import FeatureDoctor from '../components/featureDoctor'
 import HeaderComponent from '../components/headerComponent'
 import GradientCircle from '../components/gradientCircle'
-import useFirestoreCollection from '../hooks/useFirestoreCollection'
+import useAuth from '../hooks/useAuth'
+import { firestore } from '../config/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 export default function FavouriteScreen() {
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
+    const [favoriteDoctors, setFavoriteDoctors] = useState([]);
+    const { user } = useAuth();
 
-    if (doctorsLoading) {
-        return (
-          <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Loading...</Text>
-          </SafeAreaView>
-        );
-    }
+    useEffect(() => {
+        if (user) {
+            const fetchFavoriteDoctors = async () => {
+                try {
+                    const userDoc = await getDoc(doc(firestore, 'users', user.uid));
+                    const userData = userDoc.data();
+                    console.log("User data: ", userData);
 
-    // Sử dụng custom hook để lấy dữ liệu từ Firestore
-    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
+                    console.log("favorite doctor from user: ", userData?.favorites);
 
-    const featureDoctors = doctors.filter(doctor => doctor.feature);
+                    const favoriteDoctorIds = userData?.favorites || [];
 
-    const favoriteDoctors = [
-        { 
-            id: 1, 
-            name: 'Dr. Shouey', 
-            specialist: 'Cardiology', 
-            image_url: require('../assets/images/doctor1.png'),
-            cost: '25.00',
-            rating: 4,
-            services: [
-                { number: 1, description: 'Service 1 for Dr. Shouey' },
-                { number: 2, description: 'Service 2 for Dr. Shouey' },
-                { number: 3, description: 'Service 3 for Dr. Shouey' },
-            ]
-        },
+                    const doctorDocs = await Promise.all(
+                        favoriteDoctorIds.map(id => getDoc(doc(firestore, 'doctors', id)))
 
-        { 
-            id: 2, 
-            name: 'Dr. Christenfeld N', 
-            specialist: 'Cancer', 
-            image_url: require('../assets/images/doctor2.png'),
-            cost: '25.00',
-            rating: 4,
-            services: [
-                { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
-                { number: 2, description: 'Service 2 for Dr. Christenfeld N' },
-                { number: 3, description: 'Service 3 for Dr. Christenfeld N' },
-            ]
-        },
+                    ); 
+                    // const doctors = doctorDocs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    // console.log("Get doctors: ", doctors);
 
-        { 
-            id: 3, 
-            name: 'Dr. Shouey', 
-            specialist: 'Cardiology', 
-            image_url: require('../assets/images/doctor1.png'),
-            cost: '25.00',
-            rating: 4, 
-            services: [
-                { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
-                { number: 2, description: 'Service 2 for Dr. Christenfeld N' },
-                { number: 3, description: 'Service 3 for Dr. Christenfeld N' },
-            ]
-        },
+                    const doctors = await Promise.all(doctorDocs.map(async doctorDoc => {
+                        const doctorData = doctorDoc.data();
+                        const specialtyDoc = await getDoc(doc(firestore, 'specialties', doctorData.specialty));
+                        const specialtyData = specialtyDoc.data();
 
-        { 
-            id: 4, 
-            name: 'Dr. Christenfeld N', 
-            specialist: 'Cancer', 
-            image_url: require('../assets/images/doctor2.png'),
-            cost: '25.00',
-            rating: 4,
-            services: [
-                { number: 1, description: 'Service 1 for Dr. Christenfeld N' },
-                { number: 2, description: 'Service 2 for Dr. Christenfeld N' },
-                { number: 3, description: 'Service 3 for Dr. Christenfeld N' },
-            ]
-        },
-        
-    ];
+                        return {
+                            id: doctorDoc.id,
+                            ...doctorData,
+                            specialist: specialtyData?.name || 'Unknown'
+                        };
+                    }));
+                    
+                    setFavoriteDoctors(doctors);
+                } catch (error) {
+                    console.error("Error fetching favorite doctors:", error);
+                }
+            };
+
+            fetchFavoriteDoctors();
+        }
+    }, [user]);
 
     const handleSearch = (text) => {
-        // Xử lý tìm kiếm ở đây
         setSearchText(text);
-
     };
 
     const handleSubmitSearch = (text) => {
         navigation.navigate('Search', { query: text });
     };
+
+    if (!user) {
+        return (
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Loading...</Text>
+            </SafeAreaView>
+        );
+    }
 
   return (
     <SafeAreaView style={{flex: 1, paddingTop: 36}}>
@@ -138,10 +116,21 @@ export default function FavouriteScreen() {
             </View>
 
             {/* Favorite Doctors */}
-            <ScrollView contentContainerStyle={styles.contentContainer}>
+            {/* <ScrollView contentContainerStyle={styles.contentContainer}>
                 {favoriteDoctors.map(doctor => (
                     <TouchableOpacity 
                         onPress={()=>{navigation.navigate("DoctorDetail", { doctor: doctor, services: doctor.services  })}}
+                        key={doctor.id}
+                    >
+                        <FavouriteCard doctor={doctor} />
+                    </TouchableOpacity>
+                ))}
+            </ScrollView> */}
+
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+                {favoriteDoctors.map(doctor => (
+                    <TouchableOpacity 
+                        onPress={() => { navigation.navigate("DoctorDetail", { doctor: doctor }) }}
                         key={doctor.id}
                     >
                         <FavouriteCard doctor={doctor} />
@@ -158,7 +147,7 @@ export default function FavouriteScreen() {
                     </TouchableOpacity>
                 </View>
 
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {featureDoctors.map((doctor, index) => (
                     <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', {doctor: doctor})}}>
                         <FeatureDoctor
@@ -169,7 +158,7 @@ export default function FavouriteScreen() {
                         />
                     </TouchableOpacity>
                     ))}
-                </ScrollView>
+                </ScrollView> */}
             </View>
         </ScrollView>
     </SafeAreaView>

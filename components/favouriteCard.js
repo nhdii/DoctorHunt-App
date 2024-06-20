@@ -21,6 +21,7 @@ const FavouriteCard = ({ doctor }) => {
             await updateFavorites(user.uid, doctor.id, newState);
         }
     };
+    console.log(doctor);
 
     const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
 
@@ -30,11 +31,11 @@ const FavouriteCard = ({ doctor }) => {
                 <HeartIcon color={isFavourite ? 'red' : "rgba(103, 114, 148, 1)"} />
             </TouchableOpacity>
             <View style={styles.imageContainer}>
-                <Image source={doctor.image_url} style={styles.image} />
+                <Image source={{ uri: doctor.image_url }} style={styles.image} />
             </View>
             <View style={styles.textContainer}>
-                <TextComponent style={styles.doctorName}>{doctor.name}</TextComponent>
-                <TextComponent style={styles.specialist}>{doctor.specialist}</TextComponent>
+                <TextComponent fontSize={15} fontWeight='bold' lineHeight={17.78} style={{marginTop: 11}}>{doctor.name}</TextComponent>
+                <TextComponent fontSize={12} lineHeight={14.22} color='rgba(14, 190, 126, 1)' style={{marginTop: 4}}>{doctor.specialist}</TextComponent>
             </View>
         </View>
     );
@@ -72,21 +73,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
-    doctorName: {
-        marginTop: 11,
-        fontSize: 15,
-        fontWeight: "bold",
-        lineHeight: 17.78,
-        letterSpacing: -0.3
-    },
-
-    specialist: {
-        marginTop: 4,
-        fontSize: 12,
-        lineHeight: 14.22,
-        letterSpacing: -0.3,
-        color: "rgba(14, 190, 126, 1)",
-    },
 });
 
 export default FavouriteCard;
