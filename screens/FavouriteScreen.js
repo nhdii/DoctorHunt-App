@@ -9,56 +9,47 @@ import FeatureDoctor from '../components/featureDoctor'
 import HeaderComponent from '../components/headerComponent'
 import GradientCircle from '../components/gradientCircle'
 import useAuth from '../hooks/useAuth'
-import { firestore } from '../config/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { fetchCollectionData, fetchFavoriteDoctors } from '../utils/fetchData'
 
 export default function FavouriteScreen() {
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
     const [favoriteDoctors, setFavoriteDoctors] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [featureDoctors, setFeatureDoctors] = useState([]);
     const { user } = useAuth();
 
     useEffect(() => {
         if (user) {
-            const fetchFavoriteDoctors = async () => {
-                try {
-                    const userDoc = await getDoc(doc(firestore, 'users', user.uid));
-                    const userData = userDoc.data();
-                    console.log("User data: ", userData);
-
-                    console.log("favorite doctor from user: ", userData?.favorites);
-
-                    const favoriteDoctorIds = userData?.favorites || [];
-
-                    const doctorDocs = await Promise.all(
-                        favoriteDoctorIds.map(id => getDoc(doc(firestore, 'doctors', id)))
-
-                    ); 
-                    // const doctors = doctorDocs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    // console.log("Get doctors: ", doctors);
-
-                    const doctors = await Promise.all(doctorDocs.map(async doctorDoc => {
-                        const doctorData = doctorDoc.data();
-                        const specialtyDoc = await getDoc(doc(firestore, 'specialties', doctorData.specialty));
-                        const specialtyData = specialtyDoc.data();
-
-                        return {
-                            id: doctorDoc.id,
-                            ...doctorData,
-                            specialist: specialtyData?.name || 'Unknown'
-                        };
-                    }));
-                    
-                    setFavoriteDoctors(doctors);
-                } catch (error) {
-                    console.error("Error fetching favorite doctors:", error);
-                }
+            const loadFavoriteDoctors = async () => {
+                const doctors = await fetchFavoriteDoctors(user.uid);
+                setFavoriteDoctors(doctors);
             };
 
-            fetchFavoriteDoctors();
+            loadFavoriteDoctors();
         }
     }, [user]);
+
+    useEffect(() => {
+        const loadFeatureDoctors = async () => {
+            const categoriesData = await fetchCollectionData('categories');
+            
+            const featureCategory = categoriesData.find(category => category.name === 'Feature');
+
+            if (featureCategory) {
+                const doctors = await fetchCollectionData('doctors');
+
+                const featureDoctors = featureCategory ? doctors.filter(doctor => doctor.category === featureCategory.id) : [];
+                setFeatureDoctors(featureDoctors);
+            }
+
+        };
+
+        loadFeatureDoctors();
+    }, []);
+
+
 
     const handleSearch = (text) => {
         setSearchText(text);
@@ -116,17 +107,6 @@ export default function FavouriteScreen() {
             </View>
 
             {/* Favorite Doctors */}
-            {/* <ScrollView contentContainerStyle={styles.contentContainer}>
-                {favoriteDoctors.map(doctor => (
-                    <TouchableOpacity 
-                        onPress={()=>{navigation.navigate("DoctorDetail", { doctor: doctor, services: doctor.services  })}}
-                        key={doctor.id}
-                    >
-                        <FavouriteCard doctor={doctor} />
-                    </TouchableOpacity>
-                ))}
-            </ScrollView> */}
-
             <ScrollView contentContainerStyle={styles.contentContainer}>
                 {favoriteDoctors.map(doctor => (
                     <TouchableOpacity 
@@ -147,7 +127,7 @@ export default function FavouriteScreen() {
                     </TouchableOpacity>
                 </View>
 
-                {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {featureDoctors.map((doctor, index) => (
                     <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', {doctor: doctor})}}>
                         <FeatureDoctor
@@ -158,7 +138,7 @@ export default function FavouriteScreen() {
                         />
                     </TouchableOpacity>
                     ))}
-                </ScrollView> */}
+                </ScrollView>
             </View>
         </ScrollView>
     </SafeAreaView>

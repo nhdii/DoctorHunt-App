@@ -6,15 +6,28 @@ import TextComponent from '../components/textComponent';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
 import GradientCircle from '../components/gradientCircle';
+import { useEffect, useState } from 'react';
+import { fetchDoctorStatistics } from '../utils/fetchData';
 
 export default function DoctorDetailScreen({ route }) {
   const navigation = useNavigation();
   const { doctor, services = []  } = route.params;
 
+  const [statistics, setStatistics] = useState({});
+
+  useEffect(() => {
+    const loadStatistics = async () => {
+      const stats = await fetchDoctorStatistics(doctor.id);
+      setStatistics(stats);
+    };
+
+    loadStatistics();
+  }, [doctor.id]);
+
   const statisticsData = [
-    { number: 100, label: 'Running' },
-    { number: 500, label: 'Ongoing' },
-    { number: 700, label: 'Patient' }
+    { number: statistics.running || 0, label: 'Running' },
+    { number: statistics.ongoing || 0, label: 'Ongoing' },
+    { number: statistics.patients || 0, label: 'Patient' }
   ];
 
   return (

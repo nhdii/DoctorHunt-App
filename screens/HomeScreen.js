@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, StatusBar, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GradientCircle from '../components/gradientCircle'
 import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent'
@@ -8,7 +8,7 @@ import PopularDoctor from '../components/popularDoctor'
 import FeatureDoctor from '../components/featureDoctor'
 import SearchBar from '../components/searchBar'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
-import useFirestoreCollection from '../hooks/useFirestoreCollection'
+import { fetchCollectionData, fetchSpecialtyData } from '../utils/fetchData'
 
 var {width, height} = Dimensions.get('window')
 
@@ -16,12 +16,59 @@ export default function HomeScreen() {
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
-
+    const [categories, setCategories] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [specialties, setSpecialties] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const dentistIcon = require('../assets/images/dentist.png'); 
     const heartIcon = require('../assets/images/heart.png'); 
     const eyeIcon = require('../assets/images/eye.png'); 
     const bodyIcon = require('../assets/images/body.png'); 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [categoriesData, doctorsData, specialtiesData] = await Promise.all([
+                    fetchCollectionData('categories'),
+                    fetchCollectionData('doctors'),
+                    fetchCollectionData('specialties')
+                ]);
+
+                // Fetch specialties for each doctor
+                const doctorsWithSpecialties = await Promise.all(doctorsData.map(async (doctor) => {
+                    const specialtyData = await fetchSpecialtyData(doctor.specialty);
+                    return {
+                        ...doctor,
+                        specialist: specialtyData?.name || 'Unknown Specialty'
+                    };
+                }));
+
+                setCategories(categoriesData);
+                setDoctors(doctorsWithSpecialties);
+                setSpecialties(specialtiesData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Loading...</Text>
+            </SafeAreaView>
+        );
+    }
+
+    const popularCategory = categories.find(category => category.name === 'Popular');
+    const featureCategory = categories.find(category => category.name === 'Feature');
+    const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
+    const featureDoctors = featureCategory ? doctors.filter(doctor => doctor.category === featureCategory.id) : [];
 
     const handleSearch = (text) => {
         // Xử lý tìm kiếm ở đây
@@ -32,35 +79,6 @@ export default function HomeScreen() {
     const handleSubmitSearch = (text) => {
         navigation.navigate('Search', { query: text });
     };
-
-    // Fetch categories
-    const { data: categories, loading: categoriesLoading } = useFirestoreCollection('categories');
-    // Fetch doctors
-    const { data: doctors, loading: doctorsLoading } = useFirestoreCollection('doctors');
-    // Fetch specialties
-    const { data: specialties, loading: specialtiesLoading } = useFirestoreCollection('specialties');
-
-    if (categoriesLoading || doctorsLoading || specialtiesLoading) {
-        return (
-            <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Loading...</Text>
-            </SafeAreaView>
-        );
-    }
-
-    // Find popular and feature categories
-    const popularCategory = categories.find(category => category.name === 'Popular');
-    const featureCategory = categories.find(category => category.name === 'Feature');
-
-    // Filter doctors based on categoryId
-    const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
-    const featureDoctors = featureCategory ? doctors.filter(doctor => doctor.category === featureCategory.id) : [];
-
-    const getSpecialtyName = (specialtyId) => {
-        const specialty = specialties.find(spec => spec.id === specialtyId);
-        return specialty ? specialty.name : 'Unknown Specialty';
-    };
-
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -171,7 +189,7 @@ export default function HomeScreen() {
                             <PopularDoctor
                                 image={{ uri: doctor.image_url }}
                                 name={doctor.name}
-                                role={getSpecialtyName(doctor.specialty)}
+                                role={doctor.specialist}
                                 rating={doctor.rating}
                             />
                         </TouchableOpacity>
