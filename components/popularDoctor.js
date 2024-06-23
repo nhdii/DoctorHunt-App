@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import TextComponent from './textComponent';
 
 const PopularDoctor = ({image, name, role, rating }) => {
   return (
@@ -10,8 +11,8 @@ const PopularDoctor = ({image, name, role, rating }) => {
 
             {/* Details */}
             <View style={styles.details}>
-                <Text style={styles.name}>{name}</Text>
-                <Text style={styles.role}>{role}</Text>
+                <TextComponent fontSize={18} fontWeight='500' lineHeight={21.33} color='rgba(51, 51, 51, 1)' style={{marginBottom: 2}}>{name}</TextComponent>
+                <TextComponent fontSize={12} fontWeight='400' lineHeight={14.22} color='rgba(51, 51, 51, 1)' style={{marginBottom: 2}}>{role}</TextComponent>
                 <View style={styles.rating}>
                     <Text>{'⭐'.repeat(rating)}</Text>
                 </View>
@@ -50,24 +51,6 @@ const styles = StyleSheet.create({
     marginBottom: 22,
   },
 
-  name: {
-    fontFamily: 'Rubik',
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 2,
-    lineHeight: 21.33,
-    letterSpacing: -0.3,
-    color: 'rgba(51, 51, 51, 1)'
-  },
-  role: {
-    fontFamily: 'Rubik',
-    fontSize: 12,
-    fontWeight: '400',
-    marginBottom: 2,
-    lineHeight: 14.22,
-    letterSpacing: -0.3,
-    color: 'rgba(51, 51, 51, 1)'
-  },
   rating: {
     flexDirection: 'row',
   },
