@@ -7,13 +7,14 @@ import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
 import GradientCircle from '../components/gradientCircle';
 import { useEffect, useState } from 'react';
-import { fetchDoctorStatistics } from '../utils/fetchData';
+import { fetchDoctorStatistics, fetchServicesData } from '../utils/fetchData';
 
 export default function DoctorDetailScreen({ route }) {
   const navigation = useNavigation();
-  const { doctor, services = []  } = route.params;
+  const { doctor } = route.params;
 
   const [statistics, setStatistics] = useState({});
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     const loadStatistics = async () => {
@@ -21,7 +22,13 @@ export default function DoctorDetailScreen({ route }) {
       setStatistics(stats);
     };
 
+    const loadServices = async () =>{
+      const services = await fetchServicesData(doctor.id);
+      setServices(services);
+    }
+
     loadStatistics();
+    loadServices();
   }, [doctor.id]);
 
   const statisticsData = [
@@ -93,9 +100,9 @@ export default function DoctorDetailScreen({ route }) {
           </TextComponent>
           {services.map((service, index) => (
             <View style={styles.serviceContainer} key={index}>
-              <View style={styles.serviceContent}>
-                <TextComponent style={styles.serviceNumber}>{service.number}.</TextComponent>
-                <TextComponent style={styles.serviceDescription}>{service.description}</TextComponent>
+              <View style={styles.serviceContent}> 
+                <TextComponent style={styles.serviceNumber}>{index + 1}.</TextComponent>
+                <TextComponent fontSize={13} lineHeight={15.41} fontWeight='400'  color='rgba(103, 114, 148, 0.9)' style={{flex: 1}}>{service}</TextComponent>
               </View>
             </View>
           ))}
@@ -205,12 +212,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     color: 'rgba(14, 190, 127, 1)',
     fontWeight: 'bold'
-  },
-
-  serviceDescription: {
-    flex: 1,
-    fontSize: 13,
-    color: 'rgba(103, 114, 148, 0.9)'
   },
 
   mapStyle:{
