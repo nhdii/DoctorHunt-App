@@ -41,7 +41,7 @@ export default function DoctorDetailCard({ doctor, showBookNowButton = true, car
         {/* Doctor Information */}
         <View style={styles.doctorCard}>
             {/* Image */}
-            <Image source={doctor?.image_url} style={styles.image} />
+            <Image source={{ uri: doctor.image_url }} style={styles.image} />
             <View style={styles.doctorInfo}>
                 <View style={styles.doctorNameContainer}>
                     {/* Doctor Name */}
