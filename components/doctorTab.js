@@ -1,20 +1,27 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-const DoctorTab = ({ icon, widthIcon, heightIcon, color, width, height }) => {
+const DoctorTab = ({ icon, widthIcon, heightIcon, color, width, height, title }) => {
+    const navigation = useNavigation();
+    const handlePress = () => {
+      navigation.navigate('DoctorsList', { specialty: title });
+    }
   return (
-    <View style={styles.container}>
-        {/* Background Ellipses */}
-        <View style={[styles.ellipseContainer, { backgroundColor: color, width: width, height: height }]}>
-            <View style={styles.ellipse149}></View>
-            <View style={styles.ellipse148}></View>
+    <TouchableOpacity onPress={handlePress}>
+        <View style={styles.container}>
+            {/* Background Ellipses */}
+            <View style={[styles.ellipseContainer, { backgroundColor: color, width: width, height: height }]}>
+                <View style={styles.ellipse149}></View>
+                <View style={styles.ellipse148}></View>
 
-            {/* Icon */}
-            <View style={[styles.iconContainer, {width: widthIcon, height: heightIcon}]}>
-                <Image source={icon} style={styles.icon} />
+                {/* Icon */}
+                <View style={[styles.iconContainer, {width: widthIcon, height: heightIcon}]}>
+                    <Image source={icon} style={styles.icon} />
+                </View>
             </View>
         </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
