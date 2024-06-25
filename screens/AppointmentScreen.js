@@ -45,7 +45,7 @@ export default function AppointmentScreen({route}) {
         </View>
         
         {/* Header */}
-        <HeaderComponent title="Appointment" />
+        <HeaderComponent title="Appointment" titleColor='rgba(51, 51, 51, 1)' />
 
         <View style={styles.container}>
             {/* Doctor Card */}
