@@ -69,4 +69,21 @@ export const fetchDoctorStatistics = async (doctorId) => {
     }
 };
 
+export const fetchServicesData = async (doctorId) => {
+    try {
+        const doctorDoc = await getDoc(doc(firestore, 'doctors', doctorId));
+        if (doctorDoc.exists()) {
+            const doctorData = doctorDoc.data();
+            return doctorData.services || [];
+        } else {
+            console.error("No such doctor document!");
+            return {};
+        }
+    } catch (error) {
+        console.error("Error fetching doctor services:", error);
+        return {};
+    }
+};
+
+
 
