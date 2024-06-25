@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { HeartIcon as OutlineHeartIcon } from 'react-native-heroicons/outline'
 import { HeartIcon as SolidHeartIcon } from 'react-native-heroicons/solid'
 import TextComponent from './textComponent';
 import useAuth from '../hooks/useAuth';
 
-const FavouriteCard = ({ doctor }) => {
+const FavouriteCard = ({ doctor, isFavourite: initialIsFavourite, onToggleFavorite }) => {
 
     const { user, updateFavorites } = useAuth();
 
-    const [isFavourite, setIsFavourite] = useState(user?.favorites?.includes(doctor.id));
-    const [isSolid, setIsSolid] = useState(user?.favorites?.includes(doctor.id));
+    const [isFavourite, setIsFavourite] = useState(initialIsFavourite);
+    const [isSolid, setIsSolid] = useState(initialIsFavourite);
+
+    useEffect(() => {
+        setIsFavourite(initialIsFavourite);
+        setIsSolid(initialIsFavourite);
+    }, [initialIsFavourite]);
 
     const handleToggleFavorite = async () => {
         const newState = !isFavourite;
@@ -19,9 +24,11 @@ const FavouriteCard = ({ doctor }) => {
 
         if (user) {
             await updateFavorites(user.uid, doctor.id, newState);
+            if (onToggleFavorite) {
+                onToggleFavorite();
+            }
         }
     };
-    console.log(doctor);
 
     const HeartIcon = isSolid ? SolidHeartIcon : OutlineHeartIcon;
 

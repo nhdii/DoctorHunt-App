@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import TextComponent from '../components/textComponent'
 import { useNavigation } from '@react-navigation/native'
@@ -16,21 +16,20 @@ export default function FavouriteScreen() {
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
     const [favoriteDoctors, setFavoriteDoctors] = useState([]);
-    const [doctors, setDoctors] = useState([]);
     const [featureDoctors, setFeatureDoctors] = useState([]);
     const { user } = useAuth();
 
-    useEffect(() => {
+    const loadFavoriteDoctors = useCallback(async () => {
         if (user) {
-            const loadFavoriteDoctors = async () => {
-                const doctors = await fetchFavoriteDoctors(user.uid);
-                setFavoriteDoctors(doctors);
-            };
-
-            loadFavoriteDoctors();
+            const doctors = await fetchFavoriteDoctors(user.uid);
+            setFavoriteDoctors(doctors);
         }
     }, [user]);
 
+    useEffect(() => {
+        loadFavoriteDoctors();
+    }, [user, loadFavoriteDoctors]);
+    
     useEffect(() => {
         const loadFeatureDoctors = async () => {
             const categoriesData = await fetchCollectionData('categories');
@@ -113,7 +112,7 @@ export default function FavouriteScreen() {
                         onPress={() => { navigation.navigate("DoctorDetail", { doctor: doctor }) }}
                         key={doctor.id}
                     >
-                        <FavouriteCard doctor={doctor} />
+                        <FavouriteCard doctor={doctor} isFavourite={true} onToggleFavorite={loadFavoriteDoctors} />
                     </TouchableOpacity>
                 ))}
             </ScrollView>
