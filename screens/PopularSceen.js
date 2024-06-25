@@ -7,6 +7,8 @@ import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import BackArrowIcon from '../assets/icon/backArrowIcon';
 import { useNavigation } from '@react-navigation/native';
 import { fetchCollectionData, fetchSpecialtyData } from '../utils/fetchData';
+import TextComponent from '../components/textComponent';
+import GradientCircle from '../components/gradientCircle';
 
 
 export default function PopularDoctorsScreen() {
@@ -60,79 +62,115 @@ export default function PopularDoctorsScreen() {
     const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <BackArrowIcon onPress={() => navigation.goBack()} />
-
-                <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                    <MagnifyingGlassIcon size={24} color='rgba(103, 114, 148, 1)'/>
-                </TouchableOpacity>
+        <SafeAreaView style={{flex: 1, paddingTop: 36}}>
+            <View style={styles.bg}>
+                <View style={styles.topGradientCircleContainer}>
+                    <GradientCircle size={216} colors={['rgba(135, 206, 235, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
+                
+                <View style={styles.bottomGradientCircleContainer}>
+                    <GradientCircle size={216} colors={['rgba(14, 190, 126, 0.3)', 'rgba(255, 255, 255, 0.3)']} />
+                </View>
             </View>
+            
+            <ScrollView style={styles.container}>
+                
+                <View style={styles.header}>
+                    <BackArrowIcon onPress={() => navigation.goBack()} />
 
-            <Text style={styles.sectionTitle}>Popular Doctor</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-                {popularDoctors.map((doctor, index) => (
-                <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', { doctor: doctor }) }}>
-                    <PopularDoctor
-                        image={{ uri: doctor.image_url }}
-                        name={doctor.name}
-                        role={doctor.specialist}
-                        rating={doctor.rating}
-                    />
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                        <MagnifyingGlassIcon size={24} color='rgba(103, 114, 148, 1)'/>
+                    </TouchableOpacity>
+                </View>
+
+                <TextComponent fontSize={20} fontWeight='bold' lineHeight={22.33} color='rgba(51, 51, 51, 1)' style={{marginVertical: 10}}>Popular Doctor</TextComponent>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
+                    {popularDoctors.map((doctor, index) => (
+                    <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', { doctor: doctor }) }}>
+                        <PopularDoctor
+                            image={{ uri: doctor.image_url }}
+                            name={doctor.name}
+                            role={doctor.specialist}
+                            rating={doctor.rating}
+                        />
+                    </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+                <TextComponent fontSize={20} fontWeight='bold' lineHeight={22.33} color='rgba(51, 51, 51, 1)' style={{marginVertical: 10}}>Category</TextComponent>
+                {doctors.map((doctor) => (
+                    <TouchableOpacity 
+                        key={doctor.id}
+                        onPress={() => navigation.navigate("DoctorDetail", { doctor })}
+                    >
+                        <CategoryDoctorCard
+                            doctor={doctor} // Pass doctor object
+                            imageSource={{ uri: doctor.image_url }}
+                            name={doctor.name}
+                            specialty={doctor.specialist}
+                            rating={doctor.rating}
+                            views={doctor.views}
+                            isFavorite={doctor.isFavorite}
+                        />
+                    </TouchableOpacity>
                 ))}
             </ScrollView>
-
-            <Text style={styles.sectionTitle}>Category</Text>
-            {doctors.map((doctor) => (
-                <TouchableOpacity 
-                    key={doctor.id}
-                    onPress={() => navigation.navigate("DoctorDetail", { doctor })}
-                >
-                    <CategoryDoctorCard
-                        doctor={doctor} // Pass doctor object
-                        imageSource={{ uri: doctor.image_url }}
-                        name={doctor.name}
-                        specialty={doctor.specialist}
-                        rating={doctor.rating}
-                        views={doctor.views}
-                        isFavorite={doctor.isFavorite}
-                    />
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
+        </SafeAreaView>
+        
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "rgba(255, 255, 255, 1)",
-        paddingHorizontal: 20,
+
+    container:{
+        paddingHorizontal: 20
     },
+
+    bg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    
+    topGradientCircleContainer: {
+        position: 'absolute',
+        top: -33,
+        left: -100,
+    },
+    
+    bottomGradientCircleContainer: {
+        position: 'absolute',
+        bottom: -53,
+        right: -43,
+    },
+
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         marginVertical: 20,
     },
+
     backButton: {
         fontSize: 24,
         color: '#333',
     },
+
     headerText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     searchButton: {
         fontSize: 24,
         color: '#333',
     },
-    sectionTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    },
+
     horizontalScroll: {
         flexDirection: 'row',
         marginVertical: 10,
