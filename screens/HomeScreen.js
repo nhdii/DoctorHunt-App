@@ -70,6 +70,7 @@ export default function HomeScreen() {
     const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
     const featureDoctors = featureCategory ? doctors.filter(doctor => doctor.category === featureCategory.id) : [];
 
+
     const handleSearch = (text) => {
         // Xử lý tìm kiếm ở đây
         setSearchText(text);
@@ -79,6 +80,23 @@ export default function HomeScreen() {
     const handleSubmitSearch = (text) => {
         navigation.navigate('Search', { query: text });
     };
+
+    const getImageSource = (iconName) => {
+        switch (iconName) {
+            case 'dentist.png':
+                return require('../assets/images/dentist.png');
+            case 'heart.png':
+                return require('../assets/images/heart.png');
+            case 'eye.png':
+                return require('../assets/images/eye.png');
+            case 'body.png':
+                return require('../assets/images/body.png');
+            // Add cases for all possible images
+            default:
+                return require('../assets/images/default.png'); // fallback image
+        }
+    };
+
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -156,22 +174,21 @@ export default function HomeScreen() {
                 {/* Doctor tab  */}
                 <View style={styles.doctorTab}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity>
-                            <DoctorTab icon={dentistIcon} widthIcon={33} heightIcon={37.3} color="#2753F3" width={80} height={90} />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity>
-                            <DoctorTab icon={heartIcon} widthIcon={33} heightIcon={37.3} color="#0EBE7E" width={80} height={90}/>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity>
-                            <DoctorTab icon={eyeIcon} widthIcon={33} heightIcon={37.3} color="#FE7F44" width={80} height={90}/>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity>
-                            <DoctorTab icon={bodyIcon} widthIcon={33} heightIcon={37.3} color="#FF484C" width={80} height={90}/>
-                        </TouchableOpacity>
-
+                        {specialties.map((specialty, index) => (
+                            <TouchableOpacity 
+                                key={index}
+                            >
+                                <DoctorTab 
+                                    icon={getImageSource(specialty.icon)} // Assuming specialty.icon contains the URI of the icon
+                                    widthIcon={33} 
+                                    heightIcon={37.3} 
+                                    color={specialty.color} 
+                                    width={80} 
+                                    height={90} 
+                                    title={specialty.name} // Assuming specialty.name contains the name of the specialty
+                                />
+                            </TouchableOpacity>
+                        ))}
                     </ScrollView>
                 </View>
 
