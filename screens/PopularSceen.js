@@ -1,13 +1,64 @@
 // screens/PopularDoctorsScreen.js
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import PopularDoctor from '../components/popularDoctor';
 import CategoryDoctorCard from '../components/categoryCard';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import BackArrowIcon from '../assets/icon/backArrowIcon';
+import { useNavigation } from '@react-navigation/native';
+import { fetchCollectionData, fetchSpecialtyData } from '../utils/fetchData';
 
 
-export default function PopularDoctorsScreen({ navigation }) {
+export default function PopularDoctorsScreen() {
+    
+    const navigation = useNavigation();
+    const [categories, setCategories] = useState([]);
+    const [doctors, setDoctors] = useState([]);
+    const [specialties, setSpecialties] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [categoriesData, doctorsData, specialtiesData] = await Promise.all([
+                    fetchCollectionData('categories'),
+                    fetchCollectionData('doctors'),
+                    fetchCollectionData('specialties')
+                ]);
+
+                // Fetch specialties for each doctor
+                const doctorsWithSpecialties = await Promise.all(doctorsData.map(async (doctor) => {
+                    const specialtyData = await fetchSpecialtyData(doctor.specialty);
+                    return {
+                        ...doctor,
+                        specialist: specialtyData?.name || 'Unknown Specialty'
+                    };
+                }));
+
+                setCategories(categoriesData);
+                setDoctors(doctorsWithSpecialties);
+                setSpecialties(specialtiesData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>Loading...</Text>
+            </SafeAreaView>
+        );
+    }
+    
+    const popularCategory = categories.find(category => category.name === "Popular");
+    const popularDoctors = popularCategory ? doctors.filter(doctor => doctor.category === popularCategory.id) : [];
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
@@ -20,16 +71,35 @@ export default function PopularDoctorsScreen({ navigation }) {
 
             <Text style={styles.sectionTitle}>Popular Doctor</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-                <PopularDoctor image={require('../assets/images/doctor1.png')} name="Dr. Truluck Nik" specialty="Medicine Specialist" rating={5} />
-                <PopularDoctor image={require('../assets/images/doctor1.png')} name="Dr. Tranquilli" specialty="Pathology Specialist" rating={4} />
-                {/* Add more PopularDoctorCard components here */}
+                {popularDoctors.map((doctor, index) => (
+                <TouchableOpacity key={index} onPress={() => { navigation.navigate('DoctorDetail', { doctor: doctor }) }}>
+                    <PopularDoctor
+                        image={{ uri: doctor.image_url }}
+                        name={doctor.name}
+                        role={doctor.specialist}
+                        rating={doctor.rating}
+                    />
+                </TouchableOpacity>
+                ))}
             </ScrollView>
 
             <Text style={styles.sectionTitle}>Category</Text>
-            <CategoryDoctorCard imageSource={require('../assets/images/doctor1.png')} name="Dr. Pediatrician" specialty="Specialist Cardiologist" rating={2.4} views={2475} isFavorite={true} />
-            <CategoryDoctorCard imageSource={require('../assets/images/doctor1.png')} name="Dr. Mistry Brick" specialty="Specialist Dentist" rating={2.8} views={2893} isFavorite={false} />
-            <CategoryDoctorCard imageSource={require('../assets/images/doctor1.png')} name="Dr. Ether Wall" specialty="Specialist Cancer" rating={2.7} views={2754} isFavorite={true} />
-            {/* Add more CategoryDoctorCard components here */}
+            {doctors.map((doctor) => (
+                <TouchableOpacity 
+                    key={doctor.id}
+                    onPress={() => navigation.navigate("DoctorDetail", { doctor })}
+                >
+                    <CategoryDoctorCard
+                        doctor={doctor} // Pass doctor object
+                        imageSource={{ uri: doctor.image_url }}
+                        name={doctor.name}
+                        specialty={doctor.specialist}
+                        rating={doctor.rating}
+                        views={doctor.views}
+                        isFavorite={doctor.isFavorite}
+                    />
+                </TouchableOpacity>
+            ))}
         </ScrollView>
     );
 }
