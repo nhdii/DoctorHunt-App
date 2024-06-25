@@ -24,6 +24,7 @@ import EditProfile from '../screens/EditProfile'
 import AllRecordsScreen from '../screens/AllRecordsScreen';
 import PopularDoctorsScreen from '../screens/PopularSceen';
 import useAuth from '../hooks/useAuth';
+import DoctorsListScreen from '../screens/DoctorsListScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,8 @@ const AppStack = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="AllRecords" component={AllRecordsScreen} />
         <Stack.Screen name="PopularDoctor" component={PopularDoctorsScreen} />
+        <Stack.Screen name="DoctorsList" component={DoctorsListScreen} />
+        
       </Stack.Navigator>
     );
   }else{
