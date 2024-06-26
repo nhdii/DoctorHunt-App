@@ -5,7 +5,6 @@ import HeaderComponent from '../components/headerComponent';
 import SearchBar from '../components/searchBar';
 import { fetchCollectionData, fetchSpecialtyData } from '../utils/fetchData';
 import { useNavigation } from '@react-navigation/native';
-import TextComponent from '../components/textComponent';
 import CategoryDoctorCard from '../components/categoryCard';
 
 const DoctorsListScreen = ({ route }) => {
