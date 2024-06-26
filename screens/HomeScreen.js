@@ -21,11 +21,6 @@ export default function HomeScreen() {
     const [specialties, setSpecialties] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const dentistIcon = require('../assets/images/dentist.png'); 
-    const heartIcon = require('../assets/images/heart.png'); 
-    const eyeIcon = require('../assets/images/eye.png'); 
-    const bodyIcon = require('../assets/images/body.png'); 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
