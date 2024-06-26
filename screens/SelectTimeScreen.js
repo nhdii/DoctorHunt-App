@@ -8,10 +8,9 @@ import DoctorSelectCard from '../components/doctorSelectCard';
 import HeaderComponent from '../components/headerComponent'; 
 import GradientCircle from '../components/gradientCircle';
 
-export default function SelectTimeScreen() {
+export default function SelectTimeScreen({route}) {
 
     const navigation = useNavigation();
-    const route = useRoute();
     const [selectedTab, setSelectedTab] = useState(0); // State để lưu tab được chọn
     const [selectedSlots, setSelectedSlots] = useState({});
     const { doctorInfo } = route.params; // Lấy dữ liệu được truyền từ màn hình trước
