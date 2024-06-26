@@ -86,4 +86,31 @@ export const fetchServicesData = async (doctorId) => {
 };
 
 
+export const fetchAvailableTimes = async (doctorId, selectedDate) => {
+    try {
+        const doctorDoc = await getDoc(doc(firestore, 'doctors', doctorId));
+        if (doctorDoc.exists()) {
+            const doctorData = doctorDoc.data();
+            const availableTimes = doctorData.available_times || [];
+            const formattedTimes = availableTimes
+                .filter(time => new Date(time.seconds * 1000).toISOString().split('T')[0] === selectedDate)
+                .map(formatTimestamp);
+            return formattedTimes || [];
+        } else {
+            console.error("No such doctor document!");
+            return [];
+        }
+    } catch (error) {
+        console.error("Error fetching doctor available times:", error);
+        return [];
+    }
+};
 
+
+
+export const formatTimestamp = (timestamp) => {
+    if (!timestamp || !timestamp.seconds) return null;
+    const date = new Date(timestamp.seconds * 1000);
+    // console.log("get date time: ", date.toLocaleDateString('en-US', {day: '2-digit'}));
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+};
