@@ -54,7 +54,6 @@ const DoctorsListScreen = ({ route }) => {
 
     // Filter doctors based on the selected specialty
     const filteredDoctors = doctors.filter(doctor => doctor.specialist === specialty);
-    console.log("Got filtered doctor: ", filteredDoctors);
 
     return (
         <SafeAreaView style={{flex: 1, paddingTop: 36}}>
@@ -68,12 +67,13 @@ const DoctorsListScreen = ({ route }) => {
                 </View>
             </View>
 
-            <ScrollView style={{paddingHorizontal: 20}}>
-                {/* header */}
-                <View style={styles.header}>
-                    <HeaderComponent title={specialty} titleColor='rgba(51, 51, 51, 1)' />
-                </View>
+            {/* header */}
+            <View style={styles.header}>
+                <HeaderComponent title={specialty} titleColor='rgba(51, 51, 51, 1)' />
+            </View>
 
+            <ScrollView style={{paddingHorizontal: 20}}>
+                
                 {/* Search Bar */}
                 <View style={styles.searchBar}>
                     <SearchBar 
